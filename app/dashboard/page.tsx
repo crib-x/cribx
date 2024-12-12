@@ -1,25 +1,29 @@
 "use client"
 
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { usePropertyStore } from '@/lib/store/property-store'
 import { useAuthStore } from '@/lib/store/auth-store'
 import DashboardStats from '@/components/dashboard/dashboard-stats'
 import DashboardOverview from '@/components/dashboard/dashboard-overview'
 import PropertyTable from '@/components/dashboard/property-table'
 import QuickActions from '@/components/dashboard/quick-actions'
 import { motion } from 'framer-motion'
+import { useRequireAuth } from '@/lib/auth/auth-hooks'
 
 export default function DashboardPage() {
-  const { isAuthenticated, user } = useAuthStore()
-  const router = useRouter()
+  const isAuthenticated = useRequireAuth()
+  const { user } = useAuthStore()
+  const fetchProperties = usePropertyStore((state) => state.fetchProperties)
+  const fetchUnits = usePropertyStore((state) => state.fetchUnits)
 
   useEffect(() => {
-    if (!isAuthenticated || user?.role !== 'manager') {
-      router.push('/auth/signin')
+    if (isAuthenticated) {
+      fetchProperties()
+      fetchUnits()
     }
-  }, [isAuthenticated, user, router])
+  }, [isAuthenticated, fetchProperties, fetchUnits])
 
-  if (!isAuthenticated || user?.role !== 'manager') {
+  if (!isAuthenticated || !user) {
     return null
   }
 

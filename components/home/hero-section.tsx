@@ -65,7 +65,7 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Stats */}
-        {/* <motion.div 
+        <motion.div 
           className="mt-12 grid grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ export default function HeroSection() {
               <p className="text-gray-300">{stat.label}</p>
             </div>
           ))}
-        </motion.div> */}
+        </motion.div>
       </div>
     </div>
   )

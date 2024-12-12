@@ -4,22 +4,17 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/auth-store'
 import DashboardSidebar from '@/components/dashboard/dashboard-sidebar'
+import { useRequireAuth } from '@/lib/auth/auth-hooks'
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { isAuthenticated, user } = useAuthStore()
-  const router = useRouter()
+  const isAuthenticated = useRequireAuth()
+  const { user } = useAuthStore()
 
-  useEffect(() => {
-    if (!isAuthenticated || user?.role !== 'manager') {
-      router.push('/auth/signin')
-    }
-  }, [isAuthenticated, user, router])
-
-  if (!isAuthenticated || user?.role !== 'manager') {
+  if (!isAuthenticated || !user) {
     return null
   }
 
