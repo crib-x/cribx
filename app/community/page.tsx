@@ -12,8 +12,8 @@ export default function CommunityPage() {
       <CommunityHero />
       <CommunityFeatures />
       <DiscussionBoard />
-      <EventsSection />
-      <RewardsSection />
+       <EventsSection />
+     {/* <RewardsSection /> */}
     </div>
   )
 }

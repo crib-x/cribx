@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <FeaturesSection />
+      {/* <FeaturesSection /> */}
       <ServicesSection />
       <PropertyGrid />
       <PartnersSection />

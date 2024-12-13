@@ -35,10 +35,10 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <Home className="h-8 w-8 text-blue-500" />
+            <Link href="/" className="flex items-center space-x-2">
+            <img src="/logo.png" height={60} width={90} alt="cribX Logo" className="h-8 w-8" />
             <span className="text-xl font-bold text-gray-900">cribX</span>
-          </Link>
+            </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">

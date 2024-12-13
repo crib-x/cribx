@@ -33,7 +33,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Find Your Perfect Student Home
+          Find your Home Away from Home
         </motion.h1>
         <motion.p 
           className="text-xl text-gray-200 mb-8"
@@ -45,7 +45,7 @@ export default function HeroSection() {
         </motion.p>
 
         {/* Search Bar */}
-        <motion.div 
+        {/* <motion.div 
           className="bg-white p-4 rounded-lg shadow-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,10 +62,10 @@ export default function HeroSection() {
               Search
             </Button>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* Stats */}
-        <motion.div 
+        {/* <motion.div 
           className="mt-12 grid grid-cols-3 gap-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ export default function HeroSection() {
               <p className="text-gray-300">{stat.label}</p>
             </div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   )

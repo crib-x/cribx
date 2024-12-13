@@ -7,9 +7,7 @@ const PROPERTY_DATA = {
   address: "123 University Ave",
   price: 1200,
   images: [
-    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80",
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80",
-    "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.1&auto=format&fit=crop&w=2000&q=80"
+    '/turnberry/Turnberry1.jpg', '/turnberry/Turnberry2.jpg', '/turnberry/Turnberry3.jpg'
   ],
   beds: 2,
   baths: 2,
