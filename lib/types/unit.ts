@@ -13,6 +13,7 @@ export interface Unit {
 
 // Main Type for a Property Unit
 export type PropertyUnit = {
+  status: string
   id: string; // Unique identifier for the unit
   propertyId: string; // ID of the property this unit belongs to
   type:

@@ -2,13 +2,14 @@ import { PropertyUnit } from "./unit";
 
 export type Property = {
   title: string;
+  id: number
   address: string;
   description: string;
   price: PriceRange;
   featuredImage: string; // URL to the main image
   specs: PropertySpec; // Key property specifications
   parking: Parking; // Parking details
-  incentives: Incentive[]; // Incentives for renting
+  incentives: Incentive; // Incentives for renting
   fees: Fee[]; // Additional fees for renting
   pet: PetPolicy; // Pet policies and restrictions
   charges: Charges; // Charges like water, gas, etc.
@@ -19,6 +20,12 @@ export type Property = {
   videos: Video[]; // Media URLs for videos
   contact: AgentContact; // Agent or owner contact details
   logo?: string; // Optional logo URL
+  location?: PropertyLocation,
+  type: any 
+  features?: {
+    community: string[],
+    apartment: string[]
+  }
   images: string[]; // Array of image URLs
 };
 
@@ -31,8 +38,22 @@ export type Parking = {
 };
 
 export type Incentive = {
-  title: string; // e.g., "$20 off on deposit"
+  discount : {
+    amount: number,
+    title: string
+  }; 
+  
 };
+
+export type PropertyLocation =  {
+lat: number
+lng:number,
+nearby: {
+  schools: string[]
+  dining: string[]
+  transportation: string[]
+}
+}
 
 export type Fee = {
   title: string; // e.g., "Application Fee"

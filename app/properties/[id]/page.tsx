@@ -1,47 +1,78 @@
-import PropertyDetailClient from '@/components/properties/detail/property-detail-client'
+"use client"
 
-// Sample data - would normally come from an API
-const PROPERTY_DATA = {
-  id: 1,
-  title: "Luxury Student Apartment",
-  address: "123 University Ave",
-  price: 1200,
-  images: [
-    '/turnberry/Turnberry1.jpg', '/turnberry/Turnberry2.jpg', '/turnberry/Turnberry3.jpg'
-  ],
-  beds: 2,
-  baths: 2,
-  sqft: 900,
-  description: "Luxurious student apartment featuring modern amenities and prime location near campus.",
-  features: {
-    community: ["Pool", "Fitness Center", "Study Rooms", "Package Lockers"],
-    apartment: ["In-Unit Laundry", "Dishwasher", "Central AC", "Walk-in Closet"]
-  },
-  location: {
-    lat: 40.7128,
-    lng: -74.0060,
-    nearby: {
-      schools: ["University Campus - 0.2 miles", "Library - 0.5 miles"],
-      dining: ["Student Center - 0.3 miles", "Restaurant Row - 0.7 miles"],
-      transportation: ["Bus Stop - 0.1 miles", "Train Station - 0.8 miles"]
-    }
-  },
-  incentives: {
-    deposit: 99,
-    applicationFee: 30,
-    special: "$500 off first month's rent"
-  }
-}
-
-export function generateStaticParams() {
-  // In a real application, this would fetch all property IDs from an API
-  return [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' }
-  ]
-}
+import { useEffect, useState } from 'react'
+import { MOCK_PROPERTIES } from '@/lib/data/mock-properties'
+import PropertyDetail from '@/components/properties/property-detail'
+import { LoadingState } from '@/components/ui/loading-state'
+import { useParams } from 'next/navigation'
+import { Property } from '@/lib/types/property'
 
 export default function PropertyDetailPage() {
-  return <PropertyDetailClient property={PROPERTY_DATA} />
+  const [property, setProperty] = useState<Property | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const params = useParams()
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      setIsLoading(true)
+      try {
+        // In a real app, this would be an API call
+        const found = MOCK_PROPERTIES.find(p => p.id.toString() === params.id)
+        
+        // Add default location data if not present
+        if (found) {
+          const propertyWithDefaults: Property = {
+            ...found,
+            location: {
+              lat: 40.7128,
+              lng: -74.0060,
+              nearby: {
+                schools: ["Sample University", "Local High School"],
+                dining: ["Restaurant A", "Cafe B"],
+                transportation: ["Bus Station", "Train Station"]
+              }
+            },
+            features: {
+              community: found.communityFeatures || [],
+              apartment: found.amenities || []
+            }
+          }
+          setProperty(propertyWithDefaults)
+        }
+      } catch (error) {
+        console.error('Failed to fetch property:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    if (params.id) {
+      fetchProperty()
+    }
+  }, [params.id])
+
+  if (isLoading) {
+    return <LoadingState message="Loading property details..." />
+  }
+
+  if (!property) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900">Property Not Found</h1>
+            <p className="mt-2 text-gray-600">
+              The property you're looking for doesn't exist or has been removed.
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 pt-16">
+      <PropertyDetail property={property} />
+    </div>
+  )
 }

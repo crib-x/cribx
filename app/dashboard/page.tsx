@@ -14,14 +14,14 @@ export default function DashboardPage() {
   const isAuthenticated = useRequireAuth()
   const { user } = useAuthStore()
   const fetchProperties = usePropertyStore((state) => state.fetchProperties)
-  const fetchUnits = usePropertyStore((state) => state.fetchUnits)
+  // const fetchUnits = usePropertyStore((state) => state.fetchUnits)
 
   useEffect(() => {
     if (isAuthenticated) {
       fetchProperties()
-      fetchUnits()
+      // fetchUnits()
     }
-  }, [isAuthenticated, fetchProperties, fetchUnits])
+  }, [isAuthenticated, fetchProperties])
 
   if (!isAuthenticated || !user) {
     return null

@@ -8,29 +8,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { MOCK_PROPERTIES } from '@/lib/data/mock-properties'
 
-const partners = [
-  {
-    name: "University Housing",
-    logo: "/logos/university-housing.svg",
-  },
-  {
-    name: "Student Life Services",
-    logo: "/logos/student-life.svg",
-  },
-  {
-    name: "Campus Residences",
-    logo: "/logos/campus-residences.svg",
-  },
-  {
-    name: "Student Affairs",
-    logo: "/logos/student-affairs.svg",
-  },
-  {
-    name: "Housing Association",
-    logo: "/logos/housing-association.svg",
-  },
-]
+const partners = MOCK_PROPERTIES
 
 export default function PartnersSection() {
   return (
@@ -43,13 +23,13 @@ export default function PartnersSection() {
           </p>
         </div>
 
-        <div className="relative px-8">
+        <div className="relative px-8 justify-center">
           <Carousel
             opts={{
               align: "center",
               loop: true,
             }}
-            className="w-full"
+            className="w-full justify-center"
           >
             <CarouselContent>
               {partners.map((partner, index) => (
@@ -57,7 +37,7 @@ export default function PartnersSection() {
                   <div className="flex items-center justify-center h-24 px-6 grayscale hover:grayscale-0 transition-all">
                     <div className="relative w-full h-full">
                       {/* Fallback icon if image fails to load */}
-                      <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+                      {/* <div className="absolute inset-0 flex items-center justify-center text-gray-400">
                         <svg
                           className="w-12 h-12"
                           fill="none"
@@ -71,11 +51,13 @@ export default function PartnersSection() {
                             d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
                           />
                         </svg>
-                      </div>
+                      </div> */}
                       <Image
-                        src={partner.logo}
-                        alt={partner.name}
-                        fill
+                        
+                        src={partner.logo || '/default-logo.png'}
+                        alt={partner.title}
+                        height={100}
+                        width={100}
                         className="object-contain"
                         onError={(e) => {
                           // Keep fallback visible if image fails to load

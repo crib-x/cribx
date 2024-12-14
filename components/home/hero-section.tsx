@@ -45,24 +45,27 @@ export default function HeroSection() {
         </motion.p>
 
         {/* Search Bar */}
-        {/* <motion.div 
-          className="bg-white p-4 rounded-lg shadow-lg max-w-2xl mx-auto"
+        <motion.div 
+          className=" rounded-lg shadow-lg max-w-2xl mx-auto flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <div className="flex gap-2">
-            <Input 
+            {/* <Input 
               type="text" 
               placeholder="Enter university or location..."
               className="flex-grow"
-            />
-            <Button className="bg-blue-600 hover:bg-blue-700 min-w-[120px]">
+            /> */}
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
+              onClick={() => window.location.href = '/properties'}
+            >
               <Search className="h-4 w-4 mr-2" />
-              Search
+              Find Room Now
             </Button>
           </div>
-        </motion.div> */}
+        </motion.div>
 
         {/* Stats */}
         {/* <motion.div 

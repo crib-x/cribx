@@ -13,23 +13,28 @@ export interface SignupData extends AuthCredentials {
 export const authService = {
   async login({ email, password }: AuthCredentials) {
     const supabase = createClient()
-    const { data, error } = await supabase.auth.signInWithPassword({
+    
+    // Sign in and create session
+    const { data: { user }, error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    if (error) throw error
+    if (signInError) throw signInError
 
-    if (data.user) {
-      const { data: profile } = await supabase
+    if (user) {
+      // Fetch the user's profile
+      const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', data.user.id)
+        .eq('id', user.id)
         .single()
 
+      if (profileError) throw profileError
+
       return {
-        id: data.user.id,
-        email: data.user.email!,
+        id: user.id,
+        email: user.email!,
         name: profile.name,
         role: profile.role,
       }
@@ -40,25 +45,38 @@ export const authService = {
 
   async signup({ email, password, name, role }: SignupData) {
     const supabase = createClient()
-    const { data, error } = await supabase.auth.signUp({
+    
+    // Sign up user
+    const { data: { user }, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          name,
+          role
+        }
+      }
     })
 
-    if (error) throw error
+    if (signUpError) throw signUpError
 
-    if (data.user) {
-      await supabase.from('profiles').insert([
-        {
-          id: data.user.id,
-          name,
-          role,
-        },
-      ])
+    if (user) {
+      // Create the user's profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert([
+          {
+            id: user.id,
+            name,
+            role,
+          },
+        ])
+
+      if (profileError) throw profileError
 
       return {
-        id: data.user.id,
-        email: data.user.email!,
+        id: user.id,
+        email: user.email!,
         name,
         role,
       }
@@ -69,6 +87,21 @@ export const authService = {
 
   async logout() {
     const supabase = createClient()
-    await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
   },
+
+  async getSession() {
+    const supabase = createClient()
+    const { data: { session }, error } = await supabase.auth.getSession()
+    if (error) throw error
+    return session
+  },
+
+  async refreshSession() {
+    const supabase = createClient()
+    const { data: { session }, error } = await supabase.auth.refreshSession()
+    if (error) throw error
+    return session
+  }
 }
