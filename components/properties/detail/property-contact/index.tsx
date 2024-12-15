@@ -47,7 +47,7 @@ export default function PropertyContact({ property }: PropertyContactProps) {
               onClick={() => setShowLeaseRequest(true)}
             >
               <MessageSquare className="mr-2 h-4 w-4" />
-              Request to Lease
+              Request Lease
             </Button>
 
             {property.contact && (
