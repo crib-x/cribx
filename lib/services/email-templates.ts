@@ -7,6 +7,7 @@ interface EmailTemplateProps {
   moveInDate?: Date;
   needsPickup?: boolean;
   phone?: string;
+  message?: string;
 
 }
 
@@ -64,3 +65,25 @@ return `
   </div>
 `;
 }
+
+export function getContactForm({  name, phone, email, message}: Partial<EmailTemplateProps> ){
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #2563eb;">New Lease Request Received</h2>
+      
+      <p>Hello,</p>
+      
+      <p>You have received new enquiry from ${name}.</p>
+      
+      <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 0; font-weight: bold;">Applicant Details:</p>
+        <p style="margin: 0;">Name: ${name}</p>
+        <p style="margin: 0;">Email: ${email}</p>
+        <p style="margin: 0;">Phone: ${phone}</p>
+        <p style="margin: 0;">Message: ${message}</p>
+       
+      </div>
+      
+    </div>
+  `;
+  }

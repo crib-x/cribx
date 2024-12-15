@@ -25,8 +25,8 @@ const faqs = [
     answer: "Yes, you have full control over your roommate selection. While we provide compatibility matches, you can browse all available profiles and connect with anyone you're interested in. You can message potential roommates directly through our platform."
   },
   {
-    question: "How do I delete my account?",
-    answer: "To delete your account, go to your account settings and select 'Delete Account'. You'll need to confirm your decision. Note that this action is permanent and will remove all your data from our platform."
+    question: "How does the discount apply?",
+    answer: "You will get a referral code that the apartment will use to identify you when you apply for a lease"
   }
 ]
 

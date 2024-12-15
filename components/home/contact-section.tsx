@@ -14,6 +14,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { sendEmail } from "@/lib/services/email-service"
+import { getContactForm } from "@/lib/services/email-templates"
+import { useNotificationStore } from '@/lib/store/notifications-store'
+import { useState } from "react"
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -23,6 +27,9 @@ const formSchema = z.object({
 })
 
 export default function ContactSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const addNotification = useNotificationStore((state) => state.addNotification)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,9 +40,42 @@ export default function ContactSection() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true)
+    try {
+      const response = await sendEmail({
+        to: "support@example.com",
+        subject: "New Contact Form Submission",
+        html: getContactForm({name: values.name, email: values.email, phone: values.phone, message: values.description}),
+      })
+      // TODO: Store lease request in database
+      // await leaseRequestService.submitRequest({
+      //   propertyId,
+      //   ...data,
+      //   discountCode,
+      //   discountAmount
+      // })
+      console.log('Email sent:', response)
+      addNotification({
+        title: "Success",
+        message: "Your message has been sent successfully!",
+        type: "success"
+      })
+
+      // onSuccess?.()
+    } catch (error) {
+      console.error('Failed to submit message:', error)
+      addNotification({
+        title: "Error",
+        message: "Failed to submit message. Please try again.",
+        type: "error"
+      })
+      // onError?.()
+    } finally {
+      setIsSubmitting(false)
+    }
   }
+
 
   return (
     <section className="py-24 bg-gray-50">
@@ -110,7 +150,7 @@ export default function ContactSection() {
                 )}
               />
 
-              <Button type="submit" className="w-full">Send Message</Button>
+              <Button type="submit" className="w-full">{isSubmitting  ? 'Send Message...' : 'Send Message'}</Button>
             </form>
           </Form>
         </div>

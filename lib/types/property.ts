@@ -15,12 +15,14 @@ export type Property = {
   charges: Charges; // Charges like water, gas, etc.
   amenities: string[]; // List of amenities
   units: PropertyUnit[]; // Associated units for the property
-  floorPlan: FloorPlan[]; // Floor plan details
+  floorPlan: string[]; // Floor plan details
   communityFeatures: string[]; // Community-wide features
   videos: Video[]; // Media URLs for videos
   contact: AgentContact; // Agent or owner contact details
   logo?: string; // Optional logo URL
   location?: PropertyLocation,
+  incentiveList?: IncentiveList,  
+  unitMedia: string[]; // Interior images or videos
   type: any 
   features?: {
     community: string[],
@@ -44,6 +46,14 @@ export type Incentive = {
   }; 
   
 };
+
+export type IncentiveList = [
+  {
+    propertyType : string,
+    title: string
+    note: string
+  }
+]
 
 export type PropertyLocation =  {
 lat: number

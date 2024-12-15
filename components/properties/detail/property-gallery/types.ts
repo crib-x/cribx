@@ -6,12 +6,10 @@ export interface MediaItem {
 
 export interface PropertyGalleryProps {
   images: string[];
-  floorPlans?: Array<{
-    title: string;
-    imageUrl: string;
-  }>;
+  floorPlans?: string[];
   videos?: Array<{
     title: string;
     url: string;
   }>;
+  units: string[];
 }

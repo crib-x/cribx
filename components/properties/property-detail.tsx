@@ -42,7 +42,7 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
         className="space-y-8"
       >
         {/* Property Gallery */}
-        <PropertyGallery images={property.images} />
+        <PropertyGallery images={property.images} floorPlans={property.floorPlan} units={property.unitMedia}  />
 
         {/* Quick Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

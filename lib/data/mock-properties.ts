@@ -10,7 +10,7 @@ export const MOCK_PROPERTIES: Property[] = [
     price: { min: 800, max: 1200 },
     logo: '/lexi_logo.jpg',
     type: "Property",
-    featuredImage: "/turnberry/Turnberry1.jpg",
+    featuredImage: "/lexicon/property_photos/lexington_property1.jpg",
     specs: {
       beds: 2,
       baths: 2,
@@ -21,6 +21,13 @@ export const MOCK_PROPERTIES: Property[] = [
       spaces: 100,
       cost: 50
     },
+    incentiveList: [
+      {
+        propertyType: 'All',
+        title: "$20 off on Security Deposit through cribX",
+        note: "Discount"
+      }
+    ],
     incentives: {
       discount: {
         amount: 20,
@@ -157,11 +164,28 @@ export const MOCK_PROPERTIES: Property[] = [
       "Bike Storage"
     ],
     floorPlan: [
-      {
-        id: "fp1",
-        title: "2 Bedroom Classic",
-        imageUrl: "/lexicon/property_photos/lexington_property1.jpg"
-      }
+      '/lexicon/floor_plans/Lexington_1bed.jpg',
+      '/lexicon/floor_plans/Lexington_1bedExtend.jpg',
+      '/lexicon/floor_plans/Lexington_1bedOffice.jpg',
+      '/lexicon/floor_plans/Lexington_2B1.5B.jpg',
+      '/lexicon/floor_plans/Lexington_2B2B.jpg',
+      '/lexicon/floor_plans/Lexington_studio.jpg',
+    ],
+
+
+
+    unitMedia: [
+      '/lexicon/unit_photos/unit_photo1.jpg',
+      '/lexicon/unit_photos/unit_photo2.jpg',
+      '/lexicon/unit_photos/unit_photo3.jpg',
+      '/lexicon/unit_photos/unit_photo5.jpg',
+      '/lexicon/unit_photos/unit_photo6.jpg',
+      '/lexicon/unit_photos/unit_photo7.jpg',
+      '/lexicon/unit_photos/unit_photo8.jpg',
+      '/lexicon/unit_photos/unit_photo9.jpg',
+      '/lexicon/unit_photos/unit_photo10.jpg',
+      '/lexicon/unit_photos/unit_photo11.jpg',
+
     ],
     communityFeatures: [
       "Wi-Fi",
@@ -193,9 +217,9 @@ export const MOCK_PROPERTIES: Property[] = [
       }
     ],
     contact: {
-      name: "Turnberry Apartments",
-      email: "john@example.com",
-      phone: "309-237-0609"
+      name: "Lexington Concord Apartments",
+      email: "hayley@lakeshoremgmt.com",
+      phone: "(309)837-3377"
     },
     images: [
       "/lexicon/property_photos/lexington_property1.jpg",
@@ -207,11 +231,7 @@ export const MOCK_PROPERTIES: Property[] = [
       "/lexicon/property_photos/lexington_property7.jpg",
       "/lexicon/property_photos/lexington_property8.jpg",
       "/lexicon/property_photos/lexington_property9.jpg",
-      "/lexicon/property_photos/lexington_property10.jpg",
-
-   
-
-
+      "/lexicon/property_photos/lexington_property10.jpg"
     ]
   },
   {
@@ -225,7 +245,7 @@ Turnberry Village III is an apartment community located in McDonough County and 
     price: { min: 800, max: 1200 },
     logo: '/turn_logo.jpeg',
 
-    featuredImage: "/lexicon/property_photos/lexington_property1.jpg",
+    featuredImage:  "/turnberry/Turnberry8.jpg",
     specs: {
       beds: 2,
       baths: 2,
@@ -302,13 +322,15 @@ Turnberry Village III is an apartment community located in McDonough County and 
       "Walk-In Closets",
       "Lawn"
     ],
-    floorPlan: [
+    incentiveList: [
       {
-        id: "fp1",
-        title: "2 Bedroom Classic",
-        imageUrl: "/turnberry/2bed-plan.jpg"
+        propertyType: '2 BR',
+        title: "$20 off on Security Deposit through cribX",
+        note: "Discount"
       }
     ],
+    floorPlan: [],
+    unitMedia: [],
     communityFeatures: [
       "Wi-Fi",
       "Laundry Facilities",
@@ -336,8 +358,8 @@ Turnberry Village III is an apartment community located in McDonough County and 
     ],
     contact: {
       name: "Turnberry Apartments",
-      email: "john@example.com",
-      phone: "309-836-3819"
+      email: "turnberrymacomb2@aol.com",
+      phone: "309-836-3536"
     },
     images: [
       "/turnberry/Turnberry1.jpg",
