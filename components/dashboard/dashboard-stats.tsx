@@ -6,7 +6,7 @@ import { Building, Users, DollarSign, Percent, Home } from 'lucide-react'
 const stats = [
   {
     name: "Total Properties",
-    value: "12",
+    value: "0",
     icon: Building,
     description: "Active listings",
     trend: "+2 this month",
@@ -14,7 +14,7 @@ const stats = [
   },
   {
     name: "Total Units",
-    value: "48",
+    value: "0",
     icon: Home,
     description: "Across all properties",
     trend: "+5 this month",
@@ -22,7 +22,7 @@ const stats = [
   },
   {
     name: "Monthly Revenue",
-    value: "$24,500",
+    value: "$0",
     icon: DollarSign,
     description: "Current month",
     trend: "+8% vs last month",
@@ -30,10 +30,10 @@ const stats = [
   },
   {
     name: "Occupancy Rate",
-    value: "92%",
+    value: "N/A",
     icon: Percent,
     description: "Units occupied",
-    trend: "-2% vs last month",
+    trend: "",
     trendUp: false,
   },
 ]

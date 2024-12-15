@@ -7,14 +7,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-const faqs = [
+const faqs : {question: string, answer: string}[] = [
   {
     question: "How does the platform work?",
     answer: "Our platform connects students with housing options, roommates, and community resources. You can browse listings, filter by preferences, and connect directly with property owners or potential roommates. We also offer a marketplace for essentials and community features for events and discussions."
   },
+  { 
+    question: "What is a discount and how do I get it?",
+    answer: "For signing a lease through cribX, we pay some part of your lease application for you as a Discount. Learn more from the pages of your preferred apartment.",
+  },
   {
-    question: "Is the platform secure?",
-    answer: "Yes, we take security seriously. All users must verify their accounts, and we implement strict data protection measures. We also provide secure messaging and reporting features to ensure a safe environment for all users."
+    question: "How does the discount apply?",
+    answer: "You will get a referral code that the apartment will use to identify you when you apply for a lease"
+  },
+  {
+    question: "How do I sublease my apartment?",
+    answer: "When you secure a sublease match with another person, you would need to contact your apartment’s management for approval. Your apartment manager will then ensure all necessary documentation are approved to enable you to sublease your room."
   },
   {
     question: "How does the roommate matching process work?",
@@ -24,10 +32,6 @@ const faqs = [
     question: "Can I select a specific roommate?",
     answer: "Yes, you have full control over your roommate selection. While we provide compatibility matches, you can browse all available profiles and connect with anyone you're interested in. You can message potential roommates directly through our platform."
   },
-  {
-    question: "How does the discount apply?",
-    answer: "You will get a referral code that the apartment will use to identify you when you apply for a lease"
-  }
 ]
 
 export default function FAQSection() {
