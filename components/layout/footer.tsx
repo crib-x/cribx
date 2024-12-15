@@ -14,9 +14,9 @@ const usefulLinks = [
 ]
 
 const socialLinks = [
-  { icon: Facebook, href: "https://facebook.com/cribx", label: "Facebook" },
-  { icon: Instagram, href: "https://instagram.com/cribx", label: "Instagram" },
-  { icon: Twitter, href: "https://twitter.com/cribx", label: "Twitter" },
+  { icon: Facebook, href: "https://web.facebook.com/people/cribX/61569663906620/",  label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/cribx_llc", label: "Instagram" },
+  { icon: Twitter, href: "https://x.com/cribx_llc", label: "Twitter" },
 ]
 
 export default function Footer() {
@@ -74,6 +74,7 @@ export default function Footer() {
                     href={social.href}
                     className="hover:text-blue-400 transition"
                     aria-label={social.label}
+                    target='_blank'
                   >
                     <Icon className="h-6 w-6" />
                   </Link>
