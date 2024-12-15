@@ -21,7 +21,7 @@ export type Property = {
   contact: AgentContact; // Agent or owner contact details
   logo?: string; // Optional logo URL
   location?: PropertyLocation,
-  incentiveList?: IncentiveList,  
+  incentiveList?: IncentiveList[],  
   unitMedia: string[]; // Interior images or videos
   type: any 
   features?: {
@@ -47,13 +47,13 @@ export type Incentive = {
   
 };
 
-export type IncentiveList = [
+export type IncentiveList = 
   {
-    propertyType : string,
+    propertyType? : string,
     title: string
-    note: string
+    note?: string
   }
-]
+
 
 export type PropertyLocation =  {
 lat: number

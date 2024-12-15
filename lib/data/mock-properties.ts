@@ -262,6 +262,8 @@ Turnberry Village III is an apartment community located in McDonough County and 
         title: '$20 off on Security Deposit through cribX'
       }
     },
+    
+    
     fees: [
       { title: "Application Fee", amount: 30 },
       { title: "Security Deposit", amount: 500 }
@@ -324,9 +326,13 @@ Turnberry Village III is an apartment community located in McDonough County and 
     ],
     incentiveList: [
       {
-        propertyType: '2 BR',
-        title: "$20 off on Security Deposit through cribX",
-        note: "Discount"
+        title: "2 bedroom - $20 discount",
+      },
+      {
+        title: "3 bedroom - $30 discount",
+      },
+      {
+        title: "4 bedroom - $40 discount",
       }
     ],
     floorPlan: [],
