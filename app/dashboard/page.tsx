@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from 'react'
-import { usePropertyStore } from '@/lib/store/property-store'
 import { useAuthStore } from '@/lib/store/auth-store'
 import DashboardStats from '@/components/dashboard/dashboard-stats'
 import DashboardOverview from '@/components/dashboard/dashboard-overview'
@@ -13,15 +12,8 @@ import { useRequireAuth } from '@/lib/auth/auth-hooks'
 export default function DashboardPage() {
   const isAuthenticated = useRequireAuth()
   const { user } = useAuthStore()
-  const fetchProperties = usePropertyStore((state) => state.fetchProperties)
   // const fetchUnits = usePropertyStore((state) => state.fetchUnits)
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchProperties()
-      // fetchUnits()
-    }
-  }, [isAuthenticated, fetchProperties])
 
   if (!isAuthenticated || !user) {
     return null
