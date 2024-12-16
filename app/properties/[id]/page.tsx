@@ -31,10 +31,6 @@ export default function PropertyDetailPage() {
                 dining: ["Restaurant A", "Cafe B"],
                 transportation: ["Bus Station", "Train Station"]
               }
-            },
-            features: {
-              community: found.communityFeatures || [],
-              apartment: found.amenities || []
             }
           }
           setProperty(propertyWithDefaults)

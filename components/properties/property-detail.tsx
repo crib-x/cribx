@@ -99,7 +99,7 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
               </TabsContent>
 
               <TabsContent value="features">
-                <PropertyFeatures features={property.features || {}} />
+                <PropertyFeatures features={property.communityFeatures || []} />
               </TabsContent>
 
               <TabsContent value="location">

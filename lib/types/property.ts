@@ -15,8 +15,8 @@ export type Property = {
   charges: Charges; // Charges like water, gas, etc.
   amenities: string[]; // List of amenities
   units: PropertyUnit[]; // Associated units for the property
-  floorPlan: string[]; // Floor plan details
-  communityFeatures: string[]; // Community-wide features
+  floorPlan: string[]; // Floor plan images
+  communityFeatures: string[]; // list of Community-wide features
   videos: Video[]; // Media URLs for videos
   contact: AgentContact; // Agent or owner contact details
   logo?: string; // Optional logo URL
@@ -24,10 +24,6 @@ export type Property = {
   incentiveList?: IncentiveList[],  
   unitMedia: string[]; // Interior images or videos
   type: any 
-  features?: {
-    community: string[],
-    apartment: string[]
-  }
   images: string[]; // Array of image URLs
 };
 
