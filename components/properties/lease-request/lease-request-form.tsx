@@ -93,14 +93,6 @@ export default function LeaseRequestForm({
         })
       })
 
-      // TODO: Store lease request in database
-      // await leaseRequestService.submitRequest({
-      //   propertyId,
-      //   ...data,
-      //   discountCode,
-      //   discountAmount
-      // })
-
       addNotification({
         title: "Success",
         message: "Lease request submitted successfully! Check your email for the discount code.",

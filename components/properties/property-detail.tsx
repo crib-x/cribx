@@ -3,24 +3,19 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Property } from "@/lib/types/property";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyGallery from "./detail/property-gallery";
 import PropertyOverview from "./detail/property-overview";
 import PropertyFeatures from "./detail/property-features";
 import PropertyLocation from "./detail/property-location";
 import {
-  Building,
   DollarSign,
   Car,
   PawPrint,
-  MessageSquare,
   Home,
 } from "lucide-react";
 import PropertyContact from "./detail/property-contact";
-import PropertyIncentives from "./detail/property-incentives";
 import PropertyUnit from "./propert-units";
 
 interface PropertyDetailProps {
@@ -28,11 +23,6 @@ interface PropertyDetailProps {
 }
 
 export default function PropertyDetail({ property }: PropertyDetailProps) {
-  const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
-
-  const availableUnits = property.units.filter(
-    (unit) => unit.availability.isAvailable
-  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -50,15 +40,6 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
 
         {/* Quick Info Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {/* <Card>
-            <CardContent className="p-4 flex items-center space-x-3">
-              <Building className="h-5 w-5 text-blue-600" />
-              <div>
-                <p className="text-sm text-gray-500">Property Type</p>
-                <p className="font-medium">{property.}</p>
-              </div>
-            </CardContent>
-          </Card> */}
           <Card>
             <CardContent className="p-4 flex items-center space-x-3">
               <DollarSign className="h-5 w-5 text-green-600" />
