@@ -13,7 +13,7 @@ export const leaseRequestSchema = z.object({
   // If needsPickup is true, require arrival date and time
   if (data.needsPickup) {
     return data.arrivalDate && data.arrivalTime;
-  }
+  } 
   return true;
 }, {
   message: "Arrival date and time are required when pickup is needed",

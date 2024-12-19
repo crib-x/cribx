@@ -4,9 +4,18 @@ import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Users, QrCode } from 'lucide-react'
 import Image from 'next/image'
+import { CommunityQRScanner } from './community-qr-dialog'
+import { useState } from 'react'
 
 export default function CommunityHero() {
+  const [showQr, setShowQr] = useState<boolean>(false)
+  const openLink = () => {
+    console.log("Okay")
+    window.open('https://chat.whatsapp.com/KzLxU6FTthK7akwhgMHqW0', '_blank')
+  }
   return (
+    
+    <>
     <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -23,6 +32,7 @@ export default function CommunityHero() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
+               onClick={openLink}
                 size="lg" 
                 className="bg-white text-blue-600 hover:bg-blue-50"
               >
@@ -30,9 +40,10 @@ export default function CommunityHero() {
                 Join Community
               </Button>
               <Button 
+               onClick={()=> {setShowQr(true)}}
                 size="lg" 
                 variant="outline"
-                className="text-white border-white hover:bg-white/10"
+                className="text-white bg-white/10 border-white hover:bg-white/10"
               >
                 <QrCode className="mr-2 h-5 w-5" />
                 Scan QR Code
@@ -57,5 +68,8 @@ export default function CommunityHero() {
         </div>
       </div>
     </div>
+
+    <CommunityQRScanner onOpenChange={setShowQr} open={showQr} />
+    </>
   )
 }

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
+import { useState } from "react"
 
 const formSchema = z.object({
   budget: z.number().min(0).max(5000),
@@ -32,6 +33,7 @@ const formSchema = z.object({
 })
 
 export default function PreferencesForm() {
+  const [underDevelopment , setUnderDevelopment] = useState<boolean>(true)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,6 +48,18 @@ export default function PreferencesForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+  }
+
+  if(underDevelopment){
+    return (
+      <div className="flex items-center justify-center py-24">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Under Development</h1>
+          <p className="text-lg">This feature is currently under development. Please check back later.</p>
+
+        </div>
+      </div>
+    )
   }
 
   return (

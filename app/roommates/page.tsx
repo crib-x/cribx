@@ -11,11 +11,11 @@ export default function RoommatePage() {
   return (
     <div className="pt-16">
       <RoommateHero onGetStarted={() => setShowPreferences(true)} />
-      {showPreferences ? (
+      {/* {showPreferences ? ( */}
         <PreferencesForm />
-      ) : (
+      {/* ) : (
         <RoommateGrid />
-      )}
+      )} */}
     </div>
   )
 }

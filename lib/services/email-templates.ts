@@ -56,7 +56,7 @@ return `
       <p style="margin: 0;">Phone: ${phone}</p>
       <p style="margin: 0;">Expected Move-in Date: ${moveInDate?.toLocaleDateString()}</p>
       <p style="margin: 0;">Needs Pickup: ${needsPickup ? 'Yes' : 'No'}</p>
-      <p style="margin: 0;">Discount Code for Security Deposit:: ${discountCode}</p>
+      <p style="margin: 0;">Discount Code for Security Deposit: ${discountCode}</p>
     </div>
     
     <p>Please review the applicant's details and contact them to proceed with the lease process.</p>
@@ -69,14 +69,14 @@ return `
 export function getContactForm({  name, phone, email, message}: Partial<EmailTemplateProps> ){
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #2563eb;">New Lease Request Received</h2>
+      <h2 style="color: #2563eb;">New Message</h2>
       
       <p>Hello,</p>
       
       <p>You have received new enquiry from ${name}.</p>
       
       <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <p style="margin: 0; font-weight: bold;">Applicant Details:</p>
+        <p style="margin: 0; font-weight: bold;">Message Details:</p>
         <p style="margin: 0;">Name: ${name}</p>
         <p style="margin: 0;">Email: ${email}</p>
         <p style="margin: 0;">Phone: ${phone}</p>

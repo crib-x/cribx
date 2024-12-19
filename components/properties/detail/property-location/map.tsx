@@ -12,8 +12,8 @@ export default function PropertyMap({ lat, lng }: MapProps) {
 
     const initMap = async () => {
       const loader = new Loader({
-        apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
-        version: 'weekly',
+        apiKey: 'AIzaSyDE7DHRRerTj8twjaBp0YW0c68JNSiSso8',
+        version: 'weekly'
       })
 
       try {

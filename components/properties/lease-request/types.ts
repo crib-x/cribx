@@ -5,7 +5,7 @@ export interface LeaseRequestFormData {
   phone: string;
   needsPickup: boolean;
   arrivalDate?: Date;
-  arrivalTime?: string;
+  arrivalTime?: string; 
   moveInDate: Date;
   message?: string;
 }

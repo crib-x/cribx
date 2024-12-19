@@ -31,27 +31,11 @@ export default function PartnersSection() {
             }}
             className="w-full justify-center"
           >
-            <CarouselContent>
+            <CarouselContent className='justify-center'>
               {partners.map((partner, index) => (
                 <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/5">
                   <div className="flex items-center justify-center h-24 px-6 grayscale hover:grayscale-0 transition-all">
                     <div className="relative w-full h-full">
-                      {/* Fallback icon if image fails to load */}
-                      {/* <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                        <svg
-                          className="w-12 h-12"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                          />
-                        </svg>
-                      </div> */}
                       <Image
                         
                         src={partner.logo || '/default-logo.png'}

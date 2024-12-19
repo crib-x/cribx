@@ -65,7 +65,7 @@ export default function LeaseRequestForm({
     try {
       // Generate discount code and calculate amount
       const discountCode = generateDiscountCode()
-      const discountAmount = `$${property?.incentives?.discount?.amount || 0}`
+      const discountAmount = `${property?.incentives?.discount?.amount || 0}`
 
       // Send confirmation email
       await sendEmail({
@@ -79,7 +79,7 @@ export default function LeaseRequestForm({
         })
       })
       await sendEmail({
-        to: property.contact.email as string,
+        to: property?.contact?.email  as string,
         subject: `New Lease Request - ${discountCode}`,
         html: getAgentLeaseRequestEmailTemplate({
           propertyName: property.title,

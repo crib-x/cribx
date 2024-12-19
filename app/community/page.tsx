@@ -11,8 +11,8 @@ export default function CommunityPage() {
     <div className="pt-16">
       <CommunityHero />
       <CommunityFeatures />
-      <DiscussionBoard />
-      <EventsSection />
+      {/* <DiscussionBoard />
+      <EventsSection /> */}
       {/* <RewardsSection /> */}
     </div>
   );

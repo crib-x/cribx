@@ -10,6 +10,10 @@ export const MOCK_PROPERTIES: Property[] = [
     price: { min: 800, max: 1200 },
     logo: '/lexi_logo.jpg',
     type: "Property",
+    location: {
+      lat: 40.46884648312167,
+      lng: -90.67855642458525
+    },
     featuredImage: "/lexicon/property_photos/lexington_property1.jpg",
     specs: {
       beds: 2,
@@ -251,6 +255,11 @@ Turnberry Village III is an apartment community located in McDonough County and 
       baths: 2,
       sqft: 900
     },
+    location: {
+      lat: 40.45951654910126, 
+      lng: -90.69379054232895
+    },
+    
     parking: {
       type: "Garage",
       spaces: 100,
@@ -375,7 +384,11 @@ Turnberry Village III is an apartment community located in McDonough County and 
       "/turnberry/Turnberry5.jpg",
       "/turnberry/Turnberry6.jpg",
       "/turnberry/Turnberry7.jpg",
-      "/turnberry/Turnberry8.jpg"
+      "/turnberry/Turnberry8.jpg",
+      "/turnberry/Turnberry9.jpg",
+      "/turnberry/Turnberry10.jpeg",
+      "/turnberry/Turnberry11.jpeg",
+      "/turnberry/Turnberry12.jpeg"
     ]
   },
 ]

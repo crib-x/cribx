@@ -1,6 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useToast } from "@/hooks/use-toast"
+import { useNotificationStore } from "@/lib/store/notifications-store"
 import { Users } from 'lucide-react'
 
 interface RoommateHeroProps {
@@ -8,6 +10,16 @@ interface RoommateHeroProps {
 }
 
 export default function RoommateHero({ onGetStarted }: RoommateHeroProps) {
+
+  const addNotification = useNotificationStore((state) => state.addNotification)
+   const alertUser = () => {
+    addNotification({
+      title: "Hold on!",
+      message: "This feature is coming soon",
+      type: "success"
+    })
+   }
+
   return (
     <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -21,7 +33,7 @@ export default function RoommateHero({ onGetStarted }: RoommateHeroProps) {
             </p>
             <Button 
               size="lg" 
-              onClick={onGetStarted}
+              onClick={alertUser}
               className="bg-white text-blue-600 hover:bg-blue-50"
             >
               <Users className="mr-2 h-5 w-5" />

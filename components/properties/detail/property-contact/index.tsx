@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Calendar, Phone, Mail, MessageSquare } from 'lucide-react'
+import { MessageDialog } from './message-dialog'
 import LeaseRequestDialog from './lease-request-dialog'
 import { PropertyContactProps } from './types'
 
 export default function PropertyContact({ property }: PropertyContactProps) {
   const [showLeaseRequest, setShowLeaseRequest] = useState(false)
+  const [showMessage, setShowMessage] = useState(false)
 
   return (
     <>
@@ -23,14 +25,14 @@ export default function PropertyContact({ property }: PropertyContactProps) {
             </div>
 
             <div className="grid grid-cols-1 gap-4">
-              <Button variant="outline" className="w-full">
-                <Calendar className="mr-2 h-4 w-4" />
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => setShowMessage(true)}
+              >
+                <MessageSquare className="mr-2 h-4 w-4" />
                 Send Message
               </Button>
-              {/* <Button variant="outline" className="w-full">
-                <Phone className="mr-2 h-4 w-4" />
-                Call Now
-              </Button> */}
             </div>
 
             <div className="relative">
@@ -46,7 +48,7 @@ export default function PropertyContact({ property }: PropertyContactProps) {
               className="w-full bg-blue-600 hover:bg-blue-700"
               onClick={() => setShowLeaseRequest(true)}
             >
-              <MessageSquare className="mr-2 h-4 w-4" />
+              <Calendar className="mr-2 h-4 w-4" />
               Request Lease
             </Button>
 
@@ -73,6 +75,12 @@ export default function PropertyContact({ property }: PropertyContactProps) {
           </div>
         </CardContent>
       </Card>
+
+      <MessageDialog
+        propertyEmail={property.contact.email || ''}
+        open={showMessage}
+        onOpenChange={setShowMessage}
+      />
 
       <LeaseRequestDialog
         property={property}

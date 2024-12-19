@@ -21,19 +21,7 @@ export default function PropertyDetailPage() {
         
         // Add default location data if not present
         if (found) {
-          const propertyWithDefaults: Property = {
-            ...found,
-            location: {
-              lat: 40.7128,
-              lng: -74.0060,
-              nearby: {
-                schools: ["Sample University", "Local High School"],
-                dining: ["Restaurant A", "Cafe B"],
-                transportation: ["Bus Station", "Train Station"]
-              }
-            }
-          }
-          setProperty(propertyWithDefaults)
+          setProperty(found)
         }
       } catch (error) {
         console.error('Failed to fetch property:', error)

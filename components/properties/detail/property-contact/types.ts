@@ -4,7 +4,7 @@ export interface PropertyContactProps {
   property: Property
   onLeaseRequest?: () => void
 }
-
+ 
 export interface LeaseRequestDialogProps {
   property: Property
   open: boolean

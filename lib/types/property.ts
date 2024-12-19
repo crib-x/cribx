@@ -54,7 +54,7 @@ export type IncentiveList =
 export type PropertyLocation =  {
 lat: number
 lng:number,
-nearby: {
+nearby?: {
   schools: string[]
   dining: string[]
   transportation: string[]

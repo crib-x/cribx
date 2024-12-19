@@ -22,8 +22,7 @@ import { useState } from "react"
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  description: z.string().min(10, "Message must be at least 10 characters"),
+  message: z.string().min(3, "Message must be at least 10 characters"),
 })
 
 export default function ContactSection() {
@@ -35,34 +34,30 @@ export default function ContactSection() {
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
-      description: "",
+      message: "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     try {
-      const response = await sendEmail({
-        to: "support@example.com",
-        subject: "New Contact Form Submission",
-        html: getContactForm({name: values.name, email: values.email, phone: values.phone, message: values.description}),
+      await sendEmail({
+        to: "admin@cribx.net",
+        subject: `New Enquiry from ${values.name}`,
+        html: getContactForm({
+          name: values.name, 
+          email: values.email, 
+          message: values.message
+        }),
       })
-      // TODO: Store lease request in database
-      // await leaseRequestService.submitRequest({
-      //   propertyId,
-      //   ...data,
-      //   discountCode,
-      //   discountAmount
-      // })
-      console.log('Email sent:', response)
+      
       addNotification({
         title: "Success",
         message: "Your message has been sent successfully!",
         type: "success"
       })
-
-      // onSuccess?.()
+      
+      form.reset()
     } catch (error) {
       console.error('Failed to submit message:', error)
       addNotification({
@@ -70,12 +65,10 @@ export default function ContactSection() {
         message: "Failed to submit message. Please try again.",
         type: "error"
       })
-      // onError?.()
     } finally {
       setIsSubmitting(false)
     }
   }
-
 
   return (
     <section className="py-24 bg-gray-50">
@@ -120,21 +113,7 @@ export default function ContactSection() {
 
               <FormField
                 control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your phone number" type="tel" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="description"
+                name="message"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Message</FormLabel>
@@ -150,7 +129,9 @@ export default function ContactSection() {
                 )}
               />
 
-              <Button type="submit" className="w-full">{isSubmitting  ? 'Send Message...' : 'Send Message'}</Button>
+              <Button type="submit" className="w-full">
+                {isSubmitting ? 'Sending Message...' : 'Send Message'}
+              </Button>
             </form>
           </Form>
         </div>
