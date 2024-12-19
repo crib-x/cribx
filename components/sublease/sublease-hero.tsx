@@ -1,9 +1,20 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useNotificationStore } from "@/lib/store/notifications-store"
 import { Home, ShoppingBag } from 'lucide-react'
 
 export default function SubleaseHero() {
+
+ const addNotification = useNotificationStore((state) => state.addNotification)
+  
+  const  showComingSoon = () => {
+    addNotification({
+      title: "Hold on!",
+      message: "This feature is coming soon",
+      type: "success"
+    })
+  }
   return (
     <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -18,6 +29,7 @@ export default function SubleaseHero() {
             <div className="flex gap-4">
               <Button 
                 size="lg" 
+                onClick={showComingSoon}
                 className="bg-white text-purple-600 hover:bg-purple-50"
               >
                 <Home className="mr-2 h-5 w-5" />
@@ -25,8 +37,9 @@ export default function SubleaseHero() {
               </Button>
               <Button 
                 size="lg" 
+                onClick={showComingSoon}
                 variant="outline"
-                className="text-white border-white hover:bg-white/10"
+                className="text-white bg-white/10 border-white hover:bg-white/10"
               >
                 <ShoppingBag className="mr-2 h-5 w-5" />
                 Sell Item

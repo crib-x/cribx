@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 const usefulLinks = [
   { label: "Home", href: "/" },
-  { label: "Our Services", href: "/services" },
+  { label: "Our Services", href: "/#services" },
   { label: "Terms & Conditions", target: '_blank', href: "/docs/terms_and_condition.pdf" },
   { label: "Privacy Policy", target: '_blank', href: "/docs/privacy.pdf" },
 ]

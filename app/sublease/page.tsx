@@ -15,10 +15,28 @@ export default function SubleasePage() {
           <TabsTrigger value="marketplace">Marketplace</TabsTrigger>
         </TabsList>
         <TabsContent value="subleases">
-          <SubleaseGrid />
+      <>
+      <div className="flex items-center justify-center py-24">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Under Development</h1>
+          <p className="text-lg">This feature is currently under development. Please check back later.</p>
+
+        </div>
+      </div>
+
+      </>
+    
         </TabsContent>
         <TabsContent value="marketplace">
-          <MarketplaceGrid />
+ 
+      <div className="flex items-center justify-center py-24">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">Under Development</h1>
+          <p className="text-lg">This feature is currently under development. Please check back later.</p>
+
+        </div>
+      </div>
+
         </TabsContent>
       </Tabs>
     </div>
