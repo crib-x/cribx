@@ -26,31 +26,31 @@ export default function PropertyUnitsPage() {
     return null
   }
 
-  if (isLoading) {
-    return <LoadingState message="Loading property details..." />
-  }
+  // if (isLoading) {
+  //   return <LoadingState message="Loading property details..." />
+  // }
 
-  if (!selectedProperty) {
-    return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
-        <p className="mt-2 text-gray-600">The property you're looking for doesn't exist.</p>
-      </div>
-    )
-  }
+  // if (!selectedProperty) {
+  //   return (
+  //     <div className="text-center py-12">
+  //       <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
+  //       <p className="mt-2 text-gray-600">The property you're looking for doesn't exist.</p>
+  //     </div>
+  //   )
+  // }
 
-  return (
-    <div className="space-y-8">
-      <DashboardHeader
-        title={`Units - ${selectedProperty.title}`}
-        description="Manage units for this property"
-      />
+  // return (
+  //   <div className="space-y-8">
+  //     <DashboardHeader
+  //       title={`Units - ${selectedProperty.title}`}
+  //       description="Manage units for this property"
+  //     />
 
-      <UnitList
-        propertyId={propertyId}
-        units={selectedProperty.units || []}
+  //     <UnitList
+  //       propertyId={propertyId}
+  //       units={selectedProperty.units || []}
        
-      />
-    </div>
-  )
+  //     />
+  //   </div>
+  // )
 }

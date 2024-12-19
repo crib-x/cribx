@@ -16,7 +16,7 @@ export default function NewPropertyPage() {
 
   return (
     <div className="space-y-6">
-      <DashboardHeader 
+      {/* <DashboardHeader 
         title="Add New Property" 
         description="Create a new property listing with all necessary details."
       />
@@ -34,7 +34,7 @@ export default function NewPropertyPage() {
             setIsSubmitting={setIsSubmitting}
           />
         </motion.div>
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   )
 }

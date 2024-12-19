@@ -41,7 +41,7 @@ export default function PropertyDetailPage() {
 
   return (
     <div className="space-y-8">
-      <DashboardHeader
+      {/* <DashboardHeader
         title={selectedProperty.title}
         description={selectedProperty.address}
       />
@@ -61,15 +61,13 @@ export default function PropertyDetailPage() {
           <UnitList
             propertyId={propertyId}
             units={selectedProperty.units || []}
-            // onUnitUpdate={updateUnit}
-            // onUnitDelete={deleteUnit}
+  
           />
         </TabsContent>
 
         <TabsContent value="settings" className="mt-6">
-          {/* Property Settings Component */}
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
     </div>
   )
 }

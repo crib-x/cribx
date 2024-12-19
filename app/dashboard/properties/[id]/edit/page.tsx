@@ -47,7 +47,7 @@ export default function EditPropertyPage() {
 
   return (
     <div className="space-y-6">
-      <DashboardHeader 
+      {/* <DashboardHeader 
         title={`Edit Property - ${selectedProperty.title}`}
         description="Update property details and information."
       />
@@ -64,7 +64,7 @@ export default function EditPropertyPage() {
           setIsSubmitting={setIsSubmitting}
           mode="edit"
         />
-      </motion.div>
+      </motion.div> */}
     </div>
   )
 }

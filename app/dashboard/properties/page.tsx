@@ -40,7 +40,7 @@ export default function PropertiesPage() {
       /> */}
 
       {/* Property Table */}
-      <PropertyManagementTable searchTerm={searchTerm} />
+      {/* <PropertyManagementTable searchTerm={searchTerm} /> */}
     </div>
   )
 }
