@@ -21,7 +21,7 @@ export default function LeaseRequestDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg overflow-y-scroll max-h-screen">
         <DialogHeader>
           <DialogTitle>Request to Lease</DialogTitle>
         </DialogHeader>
