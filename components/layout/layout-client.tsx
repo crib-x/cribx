@@ -25,6 +25,7 @@ export default function LayoutClient({
   }
 
   const targetDate = new Date('2024-12-23T08:00:00')
+  targetDate.setHours(targetDate.getHours() + 6)
   if(new Date() < targetDate){
     return (
     <>
