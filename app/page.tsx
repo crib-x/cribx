@@ -9,13 +9,13 @@ import { CountdownTimer } from '@/components/countdown/countdown-timer'
 export default function Home() {
   const targetDate = new Date('2024-12-23T08:00:00')
   targetDate.setHours(targetDate.getHours() + 6)
-  if(new Date() < targetDate){
-      return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
-      <CountdownTimer targetDate={targetDate} />
-    </div>
-  )
-  }
+  // if(new Date() < targetDate){
+  //     return (
+  //   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800">
+  //     <CountdownTimer targetDate={targetDate} />
+  //   </div>
+  // )
+  // }
 
   return (
     <div>
