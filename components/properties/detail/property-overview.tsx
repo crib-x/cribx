@@ -43,7 +43,7 @@ export default function PropertyOverview({ property }: PropertyOverviewProps) {
               <h2 className="text-xl font-semibold mb-2">
                 About this property
               </h2>
-              <p className="text-gray-600">{property.description}</p>
+                <p className="text-gray-600" dangerouslySetInnerHTML={{ __html: property.description }}></p>
             </div>
 
             {/* Community Features */}

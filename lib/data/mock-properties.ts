@@ -6,7 +6,9 @@ export const MOCK_PROPERTIES: Property[] = [
     id: 1,
     title: "Lexington Concord Apartments Macomb",
     address: "902 N Charles St, Macomb, IL 61455",
-    description: `Lexington Concord Apartments can be your perfect home next to campus! Conveniently located to Western Illinois University and Spoon River College in Macomb, IL, we are also located on the "Go West" bus service.Enjoy our pool, 24-hour business/study center, and 24-hour fitness center! Pets welcome with permission`,
+    description: `<p style="margin-bottom: 12px">Welcome to <b>Lexington Concord Apartments</b>, where your ideal campus lifestyle awaits! Imagine living just steps away from all the action—our apartments are so close to campus that any closet could be your new home base for academic success. With a variety of studio to three-bedroom options, you’ll find the perfect space to fit your needs and style.</p><p style="margin-bottom: 12px">Dive into leisure at the biggest swimming pool in town, where sunny days become mini-vacations right outside your door. Stay active and energized with not one, but two state-of-the-art fitness centers at your disposal. Need to focus on work? Our well-equipped business center is here to support your productivity.</p><p style="margin-bottom: 12px">At Lexington Concord, we understand that your furry friends are part of the family, which is why we’re proud to be pet-friendly! Enjoy the convenience of free WiFi, concierge services, and 24-hour maintenance—because we believe that your comfort and peace of mind come first.</p>
+
+<p style="margin-bottom: 12px">With easy access to the bus route and complimentary rides to and from the train station, you’re never far from adventure. Whether you’re looking to study hard or unwind with friends, Lexington Concord Apartments is the place where convenience meets community. Come discover your new home today!</p>`,
     price: { min: 800, max: 1200 },
     logo: '/lexi_logo.jpg',
     type: "Property",
@@ -249,17 +251,17 @@ Turnberry Village III is an apartment community located in McDonough County and 
     price: { min: 800, max: 1200 },
     logo: '/turn_logo.jpeg',
 
-    featuredImage:  "/turnberry/Turnberry8.jpg",
+    featuredImage: "/turnberry/Turnberry8.jpg",
     specs: {
       beds: 2,
       baths: 2,
       sqft: 900
     },
     location: {
-      lat: 40.45951654910126, 
+      lat: 40.45951654910126,
       lng: -90.69379054232895
     },
-    
+
     parking: {
       type: "Garage",
       spaces: 100,
@@ -271,8 +273,8 @@ Turnberry Village III is an apartment community located in McDonough County and 
         title: '$20 off on Security Deposit through cribX'
       }
     },
-    
-    
+
+
     fees: [
       { title: "Application Fee", amount: 30 },
       { title: "Security Deposit", amount: 500 }
