@@ -25,7 +25,7 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
     to,
     subject,
     html,
-    bcc: 'admin@cribs.net'
+    bcc: 'admin@cribx.net'
   };
 
   try {
