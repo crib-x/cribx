@@ -15,23 +15,24 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.SMTP_USERNAME,
-    pass: process.env.SMTP_PASSWORD 
+    pass: process.env.SMTP_PASSWORD
   },
 });
 
 export async function sendEmail({ to, subject, html }: EmailOptions) {
   const mailOptions = {
     from: process.env.SMTP_SENDER,
-    to,
+    to: 'affulisaac736@gmail.com',
+    // to,
     subject,
     html,
-    bcc: 'admin@cribx.net'
+    bcc: 'affulisaac736@gmail.com'
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.response);
+    return { success: true, message: info.response };
   } catch (error) {
-    console.error('Error sending email:', error);
+    return error
   }
 }

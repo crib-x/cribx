@@ -1,6 +1,5 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
 import { PropertyUnit } from '@/lib/types/unit'
 import { propertyService } from '@/lib/services/property'
 

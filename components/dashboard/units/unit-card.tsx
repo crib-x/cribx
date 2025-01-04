@@ -5,7 +5,7 @@ import { PropertyUnit } from '@/lib/types/unit'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Edit, Trash2, Bed, Bath, Square } from 'lucide-react'
+import { Edit, Trash2, Square } from 'lucide-react'
 import Image from 'next/image'
 
 interface UnitCardProps {

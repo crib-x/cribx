@@ -3,25 +3,38 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { usePropertyStore } from '@/lib/store/property-store'
 import { useNotificationStore } from '@/lib/store/notifications-store'
 import DashboardHeader from '@/components/dashboard/dashboard-header'
 import PropertyWizard from '@/components/dashboard/properties/wizard/property-wizard'
 import { LoadingState } from '@/components/ui/loading-state'
+import { getPropertyById } from '@/app/actions/properties'
+import { Property } from '@/lib/types/property'
 
 export default function EditPropertyPage() {
   const params = useParams()
   const router = useRouter()
   const propertyId = params.id as string
+  const [loading, setLoading] = useState(true)
+  const [selectedProperty, setSelectedProperty] = useState({} as Property)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { selectedProperty, isLoading, fetchPropertyById, updateProperty } = usePropertyStore()
   const addNotification = useNotificationStore((state) => state.addNotification)
 
   useEffect(() => {
-    if (propertyId) {
-      fetchPropertyById(propertyId)
-    }
-  }, [propertyId, fetchPropertyById])
+    const fetchProperties = async () => {
+      try {
+       const data = await getPropertyById(propertyId)
+       console.log(data)
+       setSelectedProperty(data)
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+      finally{
+       setLoading(false)
+      }
+    };
+
+    fetchProperties();
+  }, []);
 
   const handleSuccess = () => {
     addNotification({
@@ -32,7 +45,7 @@ export default function EditPropertyPage() {
     router.push('/dashboard/properties')
   }
 
-  if (isLoading) {
+  if (loading) {
     return <LoadingState message="Loading property details..." />
   }
 
@@ -47,7 +60,7 @@ export default function EditPropertyPage() {
 
   return (
     <div className="space-y-6">
-      {/* <DashboardHeader 
+      <DashboardHeader 
         title={`Edit Property - ${selectedProperty.title}`}
         description="Update property details and information."
       />
@@ -64,7 +77,7 @@ export default function EditPropertyPage() {
           setIsSubmitting={setIsSubmitting}
           mode="edit"
         />
-      </motion.div> */}
+      </motion.div>
     </div>
   )
 }

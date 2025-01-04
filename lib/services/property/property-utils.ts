@@ -28,7 +28,7 @@ export function validatePropertyData(data: Partial<Property>): string[] {
   if (!data.title) errors.push('Title is required')
   if (!data.address) errors.push('Address is required')
   if (!data.description) errors.push('Description is required')
-  if (!data.price?.min || !data.price?.max) errors.push('Price range is required')
+  // if (!data.price?.min || !data.price?.max) errors.push('Price range is required')
 
   return errors
 }

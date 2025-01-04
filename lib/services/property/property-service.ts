@@ -1,5 +1,4 @@
 
-import { Property } from '@/lib/types/property'
 import { propertyQueries } from './property-queries'
 import { propertyMutations } from './property-mutations'
 import { unitService } from './unit-service'
@@ -14,7 +13,7 @@ export const propertyService = {
   createProperty: propertyMutations.createProperty,
   updateProperty: propertyMutations.updateProperty,
   deleteProperty: async (id: string) => {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { error } = await supabase
       .from('properties')
       .delete()

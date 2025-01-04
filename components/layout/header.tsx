@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Home } from 'lucide-react'
-import UserMenu from './user-menu'
+import { Menu, X } from 'lucide-react'
 import { useAuthStore } from '@/lib/store/auth-store'
 
 const navItems = [
@@ -13,11 +12,12 @@ const navItems = [
   { label: "Community", href: "/community" },
   { label: "Roommates", href: "/roommates" },
   { label: "Contact", href: "/contact" },
+  { label: "About Us", href: "/about" },
 ]
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { isAuthenticated, user } = useAuthStore()
+  const { isAuthenticated } = useAuthStore()
   const pathname = usePathname()
 
   // Close menu when route changes
@@ -48,7 +48,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            {/* {isAuthenticated && (
+            {isAuthenticated && (
               <Link 
                 href="/dashboard" 
                 className={`text-gray-600 hover:text-gray-900 ${
@@ -57,7 +57,7 @@ export default function Header() {
               >
                 Dashboard
               </Link>
-            )} */}
+            )}
             {/* <UserMenu /> */}
           </nav>
 
@@ -90,7 +90,7 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-              {/* {isAuthenticated ? (
+              {isAuthenticated ? (
                 <Link href="/dashboard" className="w-full">
                   <Button variant="outline" className="w-full">Dashboard</Button>
                 </Link>
@@ -103,7 +103,7 @@ export default function Header() {
                     <Button className="w-full bg-blue-600 hover:bg-blue-700">Sign Up</Button>
                   </Link>
                 </>
-              )} */}
+              )}
             </div>
           </div>
         )}

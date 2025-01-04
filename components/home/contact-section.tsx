@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -76,7 +77,7 @@ export default function ContactSection() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Contact Us</h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Have questions or need assistance? We're here to help! Fill out the form below and we'll get back to you as soon as possible.
+            Have questions or need assistance? We&apos;re here to help! Fill out the form below and we'll get back to you as soon as possible.
           </p>
         </div>
 

@@ -25,6 +25,7 @@ const navigation = [
   { name: 'Properties', href: '/dashboard/properties', icon: Building },
   { name: 'Units', href: '/dashboard/units', icon: Grid },
   { name: 'Tenants', href: '/dashboard/tenants', icon: Users },
+  { name: 'Lease Request', href: '/dashboard/lease-request', icon: Users },
   { name: 'Messages', href: '/dashboard/messages', icon: MessageSquare },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
@@ -60,7 +61,7 @@ export default function DashboardSidebar() {
       </Button>
 
       <div className="flex flex-col h-full">
-        <div className="p-4">
+        <div className="p-4 px-8">
           <Link href="/" className="flex items-center space-x-2">
             <Home className="h-6 w-6 text-blue-600" />
             {!collapsed && <span className="text-xl font-bold">cribX</span>}
@@ -75,7 +76,7 @@ export default function DashboardSidebar() {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "w-full justify-start",
+                    "w-full justify-start mt-2 mb-2",
                     pathname === item.href && "bg-gray-100"
                   )}
                 >

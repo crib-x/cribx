@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Home, Mail, Lock } from 'lucide-react'
 import { useAuthStore } from '@/lib/store/auth-store'
 import { useNotificationStore } from '@/lib/store/notifications-store'
@@ -168,7 +167,7 @@ export default function SignIn() {
         </div>
 
         <p className="mt-8 text-center text-sm text-gray-600">
-          Don't have an account?{' '}
+          Don't have an account?&apos;
           <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-700">
             Sign up
           </Link>

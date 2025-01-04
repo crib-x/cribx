@@ -1,45 +1,45 @@
+"use client";
 
-"use client"
-
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from './button'
-import { Progress } from './progress'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./button";
+import { Progress } from "./progress";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Step {
-  id: string
-  title: string
+  id: string;
+  title: string;
 }
 
 interface FormWizardProps {
-  steps: Step[]
-  currentStep: number
-  onNext: () => void
-  onPrev: () => void
-  onSubmit: () => void
-  children: React.ReactNode
-  isSubmitting?: boolean
+  steps: { id: string; title: string }[];
+  currentStep: number;
+  onPrev: () => void;
+  children: React.ReactNode;
+  isSubmitting?: boolean;
 }
 
 export function FormWizard({
   steps,
   currentStep,
-  onNext,
   onPrev,
-  onSubmit,
   children,
-  isSubmitting = false
+  isSubmitting = false,
 }: FormWizardProps) {
+  const isLastStep = currentStep === steps.length - 1;
+  
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto">
       <div className="mb-8">
-        <Progress value={(currentStep + 1) * (100 / steps.length)} className="h-2" />
+        <Progress
+          value={(currentStep + 1) * (100 / steps.length)}
+          className="h-2"
+        />
         <div className="mt-4 flex justify-between">
           {steps.map((step, index) => (
             <div
               key={step.id}
               className={`text-sm ${
-                index <= currentStep ? 'text-blue-600' : 'text-gray-400'
+                index <= currentStep ? "text-blue-600" : "text-gray-400"
               }`}
             >
               {step.title}
@@ -48,10 +48,7 @@ export function FormWizard({
         </div>
       </div>
 
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        onSubmit()
-      }}>
+      <div className="form-container">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -69,24 +66,30 @@ export function FormWizard({
             type="button"
             variant="outline"
             onClick={onPrev}
-            disabled={currentStep === 0}
+            disabled={currentStep === 0 || isSubmitting}
           >
             <ChevronLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-
-          {currentStep === steps.length - 1 ? (
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          ) : (
-            <Button type="button" onClick={onNext}>
-              Next
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-          )}
+          <Button 
+            type="submit"
+            form={`step-${currentStep}-form`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <div className="flex items-center">
+                <span className="mr-2">Saving...</span>
+                {/* You can add a loading spinner here */}
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <span>{isLastStep ? 'Complete' : 'Save & Continue'}</span>
+                {!isLastStep && <ChevronRight className="ml-2 h-4 w-4" />}
+              </div>
+            )}
+          </Button>
         </div>
-      </form>
+      </div>
     </div>
-  )
+  );
 }

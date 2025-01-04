@@ -11,10 +11,12 @@ interface ImageGalleryProps {
   images: File[]
   onImagesChange: (images: File[]) => void
   maxImages?: number
+  description?: string
 }
 
 export default function ImageGallery({ 
   images, 
+  description,
   onImagesChange, 
   maxImages = 10 
 }: ImageGalleryProps) {
@@ -75,6 +77,8 @@ export default function ImageGallery({
       >
         <input {...getInputProps()} />
         <Upload className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+       {description && 
+       <p className="text-sm text-gray-600">  </p>}
         <p className="text-sm text-gray-600">
           Drag & drop images here, or click to select files
         </p>
@@ -104,7 +108,7 @@ export default function ImageGallery({
             >
               <div className="absolute inset-0 rounded-lg overflow-hidden">
                 <Image
-                  src={URL.createObjectURL(file)}
+                  src={file instanceof File ? URL.createObjectURL(file) : file}
                   alt={`Image ${index + 1}`}
                   fill
                   className="object-cover"

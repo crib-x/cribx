@@ -1,50 +1,59 @@
-"use client"
-
-import { useEffect } from 'react'
-import { useAuthStore } from '@/lib/store/auth-store'
-import DashboardStats from '@/components/dashboard/dashboard-stats'
-import DashboardOverview from '@/components/dashboard/dashboard-overview'
-import PropertyTable from '@/components/dashboard/property-table'
-import QuickActions from '@/components/dashboard/quick-actions'
-import { motion } from 'framer-motion'
-import { useRequireAuth } from '@/lib/auth/auth-hooks'
-
-export default function DashboardPage() {
-  const isAuthenticated = useRequireAuth()
-  const { user } = useAuthStore()
-  // const fetchUnits = usePropertyStore((state) => state.fetchUnits)
-
-
-  if (!isAuthenticated || !user) {
-    return null
+import DashboardStats from "@/components/dashboard/dashboard-stats";
+import QuickActions from "@/components/dashboard/quick-actions";
+import { getProperties } from "../actions/properties";
+import { Property } from "@/lib/types/property";
+import PropertyManagementTable from "@/components/dashboard/properties/property-management-table";
+import { useSupabaseAuth } from "@/lib/auth/auth-server";
+export default async function DashboardPage() {
+  const { data } = await useSupabaseAuth();
+  const properties: Property[] = await getProperties();
+ 
+  const dashboardStats = {
+    properties:{ 
+    count: properties?.length,
+    total: properties?.reduce((acc, property) => {
+      return acc + property?.units?.length;
+    }, 0)},
+    oc: properties?.reduce((acc, property) => {
+      return (
+        acc +
+        property?.units?.filter((unit) => unit?.status === "occupied")?.length
+      );
+    }, 0),
+    totalVacant: properties.reduce((acc, property) => {
+      return (
+        acc +
+        property?.units?.filter((unit) => unit?.status === "vacant")?.length
+      );
+    }, 0),
   }
 
+  console.dir(dashboardStats);
   return (
-    <motion.div 
-      className="space-y-8"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Welcome back, {user.name}</h1>
-          <p className="text-gray-500">Here's what's happening with your properties today.</p>
+          <h1 className="text-2xl font-bold">Welcome back, {data?.user?.email}</h1>
+          <p className="text-gray-500">
+            Here's what's happening with your properties today.
+          </p>
         </div>
         <QuickActions />
       </div>
-      
-      <DashboardStats />
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <DashboardOverview />
+
+      <DashboardStats dashboardStats={[]} />
+
+      <div className="grid grid-cols-1  gap-8">
+        {/* <DashboardOverview /> */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h2 className="text-lg font-semibold mb-4">Quick Insights</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
               <div className="space-y-1">
                 <p className="text-sm font-medium">Most Popular Area</p>
-                <p className="text-lg font-bold text-blue-600">University District</p>
+                <p className="text-lg font-bold text-blue-600">
+                  University District
+                </p>
               </div>
               <div className="text-2xl font-bold text-blue-600">45%</div>
             </div>
@@ -61,8 +70,8 @@ export default function DashboardPage() {
 
       <div className="bg-white rounded-xl shadow-sm p-6">
         <h2 className="text-lg font-semibold mb-6">Property Overview</h2>
-        <PropertyTable />
+        <PropertyManagementTable properties={properties} />
       </div>
-    </motion.div>
-  )
+    </div>
+  );
 }

@@ -15,7 +15,7 @@ export default function LeaseRequestDialog({
   onOpenChange,
 }: LeaseRequestDialogProps) {
   const securityDeposit =
-    property.fees?.find((f) =>
+    property.fees?.find((f: any) =>
       f.title.toLowerCase().includes("security deposit")
     )?.amount || 500; // Default to 500 if not specified
 

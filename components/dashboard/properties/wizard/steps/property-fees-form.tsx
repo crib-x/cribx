@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useFieldArray, useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import { useFieldArray, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -10,74 +10,111 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Plus, Trash2 } from 'lucide-react'
-import { Switch } from "@/components/ui/switch"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Plus, Trash2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CHARGE_TYPES } from "@/lib/constants/property-options";
 
 const formSchema = z.object({
-  fees: z.array(z.object({
-    title: z.string().min(1, "Title is required"),
-    amount: z.number().min(0)
-  })),
-  pet: z.object({
-    allowed: z.boolean(),
-    typesAllowed: z.array(z.string()),
-    monthlyRent: z.number().min(0),
-    oneTimeFee: z.number().min(0),
-    countLimit: z.number().min(0),
-    weightLimit: z.string()
-  }),
-  charges: z.object({
-    water: z.array(z.object({
-      title: z.string(),
-      amount: z.number().min(0)
-    }))
-  })
-})
+  fees: z.array(
+    z.object({
+      title: z.string().min(1, "Title is required"),
+      amount: z.number().min(0),
+      id: z.string().optional(),
+    })
+  ),
+  allow_pet: z.boolean(),
+  allowed_types: z.array(z.string()),
+  monthly_rent: z.number().min(0),
+  onetime_pet_fee: z.number().min(0),
+  pet_limit: z.number().min(0),
+  weight_limit: z.string(),
+  charges: z.array(
+    z.object({
+      type: z.string(),
+      id: z.string().optional(),
+      description: z.string(),
+      amount: z.number().min(0),
+    })
+  ),
+});
 
 interface PropertyFeesFormProps {
-  data: any
-  onDataChange: (data: any) => void
+  data: any;
+  onSubmit: (data: any) => Promise<void>;
 }
 
-export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFormProps) {
+export default function PropertyFeesForm({
+  data,
+  onSubmit,
+}: PropertyFeesFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fees: data.fees || [],
-      pet: data.pet || {
-        allowed: false,
-        typesAllowed: [],
-        monthlyRent: 0,
-        oneTimeFee: 0,
-        countLimit: 0,
-        weightLimit: ""
-      },
-      charges: data.charges || {
-        water: []
-      }
+      fees: data.property_fees || [],
+      allow_pet: data.allow_pet || true,
+      allowed_types: data?.allowed_types || [],
+      monthly_rent: data?.monthly_rent ||  0,
+      onetime_pet_fee: data?.onetime_pet_fee || 0,
+      pet_limit: data?.pet_limit || 0,
+      weight_limit: data?.weight_limit,
+      charges: data.property_charges || [],
+    },
+  });
+
+  const {
+    fields: feeFields,
+    append: appendFee,
+    remove: removeFee,
+  } = useFieldArray({
+    control: form.control,
+    name: "fees",
+  });
+
+  const {
+    fields: waterChargeFields,
+    append: appendWaterCharge,
+    remove: removeWaterCharge,
+  } = useFieldArray({
+    control: form.control,
+    name: "charges",
+  });
+
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const cleanedData = {
+        ...values,
+        fees: values.fees.map(fee => {
+          const { id, ...rest } = fee;
+          return id ? { id, ...rest } : rest;  // Only include ID if it exists
+        }),
+        charges: values.charges.map(charge => {
+          const { id, ...rest } = charge;
+          return id ? { id, ...rest } : rest;  // Only include ID if it exists
+        }),
+      };
+      await onSubmit(values);
+    } catch (error) {
+      console.error("Form submission failed:", error);
     }
-  })
-
-  const { fields: feeFields, append: appendFee, remove: removeFee } = useFieldArray({
-    control: form.control,
-    name: "fees"
-  })
-
-  const { fields: waterChargeFields, append: appendWaterCharge, remove: removeWaterCharge } = useFieldArray({
-    control: form.control,
-    name: "charges.water"
-  })
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    onDataChange({ ...data, ...values })
-  }
+  };
 
   return (
     <Form {...form}>
-      <form onChange={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        id="step-2-form"
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-8"
+      >
         {/* Fees Section */}
         <div className="space-y-4">
           <div className="flex justify-between items-center">
@@ -113,11 +150,11 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="Amount" 
+                      <Input
+                        type="number"
+                        placeholder="Amount"
                         {...field}
-                        onChange={e => field.onChange(Number(e.target.value))}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -139,10 +176,10 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
         {/* Pet Policy Section */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Pet Policy</h3>
-          
+
           <FormField
             control={form.control}
-            name="pet.allowed"
+            name="allow_pet"
             render={({ field }) => (
               <FormItem className="flex items-center justify-between">
                 <FormLabel>Pets Allowed</FormLabel>
@@ -157,20 +194,20 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
             )}
           />
 
-          {form.watch("pet.allowed") && (
+          {form.watch("allow_pet") && (
             <div className="space-y-4">
               <FormField
                 control={form.control}
-                name="pet.monthlyRent"
+                name="monthly_rent"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Monthly Pet Rent</FormLabel>
                     <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="0" 
+                      <Input
+                        type="number"
+                        placeholder="0"
                         {...field}
-                        onChange={e => field.onChange(Number(e.target.value))}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -180,16 +217,16 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
 
               <FormField
                 control={form.control}
-                name="pet.oneTimeFee"
+                name="onetime_pet_fee"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>One-Time Pet Fee</FormLabel>
                     <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="0" 
+                      <Input
+                        type="number"
+                        placeholder="0"
                         {...field}
-                        onChange={e => field.onChange(Number(e.target.value))}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -200,16 +237,18 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
               <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
-                  name="pet.countLimit"
+                  name="pet_limit"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Pet Limit</FormLabel>
                       <FormControl>
-                        <Input 
-                          type="number" 
-                          placeholder="0" 
+                        <Input
+                          type="number"
+                          placeholder="0"
                           {...field}
-                          onChange={e => field.onChange(Number(e.target.value))}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
                         />
                       </FormControl>
                       <FormMessage />
@@ -219,7 +258,7 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
 
                 <FormField
                   control={form.control}
-                  name="pet.weightLimit"
+                  name="weight_limit"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Weight Limit</FormLabel>
@@ -238,43 +277,74 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
         {/* Water Charges Section */}
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Water Charges</h3>
+            <h3 className="text-lg font-semibold">Property Charges</h3>
             <Button
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => appendWaterCharge({ title: "", amount: 0 })}
+              onClick={() =>
+                appendWaterCharge({ type: "", amount: 0, description: "" })
+              }
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Charge
             </Button>
           </div>
-
+          {/* <div className="grid grid-cols-3 gap-4"> */}
           {waterChargeFields.map((field, index) => (
-            <div key={field.id} className="flex gap-4 items-start">
+            <div key={field.id} className="grid grid-cols-3 gap-4">
               <FormField
                 control={form.control}
-                name={`charges.water.${index}.title`}
+                name={`charges.${index}.type`}
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>Property Type</FormLabel> */}
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select property type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {CHARGE_TYPES.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name={`charges.${index}.description`}
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormControl>
-                      <Input placeholder="Charge Title" {...field} />
+                      <Input placeholder="Charge description" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField
+            <div className="flex gap-4 items-start">
+               <FormField
                 control={form.control}
-                name={`charges.water.${index}.amount`}
+                name={`charges.${index}.amount`}
                 render={({ field }) => (
                   <FormItem className="flex-1">
                     <FormControl>
-                      <Input 
-                        type="number" 
-                        placeholder="Amount" 
+                      <Input
+                        type="number"
+                        placeholder="Amount"
                         {...field}
-                        onChange={e => field.onChange(Number(e.target.value))}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                     <FormMessage />
@@ -290,9 +360,11 @@ export default function PropertyFeesForm({ data, onDataChange }: PropertyFeesFor
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
+             
+            </div>
           ))}
         </div>
       </form>
     </Form>
-  )
+  );
 }

@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/auth-store'
 import DashboardSidebar from '@/components/dashboard/dashboard-sidebar'
 import { useRequireAuth } from '@/lib/auth/auth-hooks'

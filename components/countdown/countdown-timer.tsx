@@ -19,6 +19,11 @@ export function CountdownTimer({ targetDate }: CountdownTimerProps) {
         <CountdownUnit value={minutes} label="Minutes" />
         <CountdownUnit value={seconds} label="Seconds" />
       </div>
+      <div className="mt-8">
+        <p className="text-lg text-white">For more information, please contact us at:</p>
+        <p className="text-lg text-white">Email: info@example.com</p>
+        <p className="text-lg text-white">Phone: (123) 456-7890</p>
+      </div>
     </div>
   )
 }

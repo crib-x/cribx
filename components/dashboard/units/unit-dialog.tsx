@@ -3,11 +3,14 @@
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
 import { PropertyUnit } from "@/lib/types/unit"
 import UnitForm from "./unit-form"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
 
 interface UnitDialogProps {
   propertyId: string
@@ -32,12 +35,14 @@ export default function UnitDialog({
             {unit ? `Edit Unit: ${unit.name}` : 'Add New Unit'}
           </DialogTitle>
         </DialogHeader>
+        <ScrollArea className="max-h-[80vh] pr-3">
         <UnitForm
           propertyId={propertyId}
           initialData={unit || undefined}
           onSubmit={onSubmit}
           isEditing={!!unit}
         />
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   )

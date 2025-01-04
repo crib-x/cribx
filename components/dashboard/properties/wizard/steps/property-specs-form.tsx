@@ -1,8 +1,7 @@
-"use client"
-
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -10,61 +9,75 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { MultiSelect } from "@/components/ui/multi-select"
-import { AMENITIES_OPTIONS } from '@/lib/constants/property-options'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { AMENITIES_OPTIONS } from "@/lib/constants/property-options";
 
 const formSchema = z.object({
-  specs: z.object({
-    beds: z.number().min(0),
-    baths: z.number().min(0),
-    sqft: z.number().min(0)
-  }),
+  bedrooms: z.number().min(0),
+  bathrooms: z.number().min(0),
+  square_footage: z.string().optional(),
   amenities: z.array(z.string()),
-  communityFeatures: z.array(z.string())
-})
+  community_features: z.array(z.string()),
+});
 
 interface PropertySpecsFormProps {
-  data: any
-  onDataChange: (data: any) => void
-  mode?: 'create' | 'edit'
+  data: any;
+  onSubmit: (data: any) => Promise<void>;
+  mode?: "create" | "edit";
 }
 
-export default function PropertySpecsForm({ 
-  data, 
-  onDataChange,
-  mode = 'create'
+export default function PropertySpecsForm({
+  data,
+  onSubmit,
 }: PropertySpecsFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      specs: data.specs || { beds: 0, baths: 0, sqft: 0 },
-      amenities: data.amenities || [],
-      communityFeatures: data.communityFeatures || []
-    }
-  })
+      bedrooms: data?.bedrooms ?? 0,
+      bathrooms: data?.bathrooms ?? 0,
+      square_footage: data?.square_footage ?? "",
+      amenities: data?.amenities ?? [],
+      community_features: data?.community_features ?? [],
+    },
+  });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    onDataChange(values)
-  }
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      await onSubmit(values);
+    } catch (error) {
+      console.error("Form submission failed:", error);
+    }
+  };
 
   return (
     <Form {...form}>
-      <form onChange={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        id="step-1-form"
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-6"
+      >
         <div className="grid grid-cols-3 gap-4">
           <FormField
             control={form.control}
-            name="specs.beds"
+            name="bedrooms"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Bedrooms</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="0" 
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="0"
                     {...field}
-                    onChange={e => field.onChange(Number(e.target.value))}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
+                    className="w-full"
                   />
                 </FormControl>
                 <FormMessage />
@@ -74,16 +87,23 @@ export default function PropertySpecsForm({
 
           <FormField
             control={form.control}
-            name="specs.baths"
+            name="bathrooms"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Bathrooms</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="0" 
+                  <Input
+                    type="number"
+                    min={0}
+                    placeholder="0"
                     {...field}
-                    onChange={e => field.onChange(Number(e.target.value))}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value ? Number(e.target.value) : 0
+                      )
+                    }
+                    className="w-full"
                   />
                 </FormControl>
                 <FormMessage />
@@ -93,16 +113,22 @@ export default function PropertySpecsForm({
 
           <FormField
             control={form.control}
-            name="specs.sqft"
+            name="square_footage"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Square Footage</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="number" 
-                    placeholder="0" 
+                  <Input
+                    type="text"
+                    placeholder="34*100"
                     {...field}
-                    onChange={e => field.onChange(Number(e.target.value))}
+                    value={field.value || ""}
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value 
+                      )
+                    }
+                    className="w-full"
                   />
                 </FormControl>
                 <FormMessage />
@@ -116,15 +142,40 @@ export default function PropertySpecsForm({
           name="amenities"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Amenities</FormLabel>
-              <FormControl>
-                <MultiSelect
-                  options={AMENITIES_OPTIONS}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  placeholder="Select amenities"
-                />
-              </FormControl>
+              <FormLabel>Indoor Features</FormLabel>
+              <div className="grid grid-cols-2 gap-4">
+                {AMENITIES_OPTIONS.map((option) => (
+                  <FormField
+                    key={option.value}
+                    control={form.control}
+                    name="amenities"
+                    render={({ field }) => (
+                      <FormItem
+                        key={option.value}
+                        className="flex flex-row items-center space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(option.value)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, option.value])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value: string) => value !== option.value
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm font-normal">
+                          {option.label}
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -132,23 +183,48 @@ export default function PropertySpecsForm({
 
         <FormField
           control={form.control}
-          name="communityFeatures"
+          name="community_features"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Community Features</FormLabel>
-              <FormControl>
-                <MultiSelect
-                  options={AMENITIES_OPTIONS}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  placeholder="Select community features"
-                />
-              </FormControl>
+              <div className="grid grid-cols-2 gap-4">
+                {AMENITIES_OPTIONS.map((option) => (
+                  <FormField
+                    key={option.value}
+                    control={form.control}
+                    name="community_features"
+                    render={({ field }) => (
+                      <FormItem
+                        key={option.value}
+                        className="flex flex-row items-center space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(option.value)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, option.value])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value: string) => value !== option.value
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm font-normal">
+                          {option.label}
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
       </form>
     </Form>
-  )
+  );
 }

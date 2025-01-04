@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthState>()(
       error: null,
 
       login: async (credentials) => {
-        set({ isLoading: true, error: null })
+        set({ isLoading: true, error: null }) // Uncomment this
         try {
           const user = await authService.login(credentials)
           set({ user, isAuthenticated: true })

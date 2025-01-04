@@ -1,67 +1,105 @@
-import { createClient } from '../../supabase/client'
+import { createClient } from '@/lib/supabase/server'
+type BucketName = typeof STORAGE_BUCKETS[keyof typeof STORAGE_BUCKETS]
 
 const STORAGE_BUCKETS = {
   PROPERTIES: 'property-media',
   TEMP: 'temp-uploads'
 } as const
 
+interface BucketConfig {
+  public: boolean
+  fileSizeLimit: number
+  allowedMimeTypes: string[]
+}
+
+const handleStorageError = (error: any, operation: string) => {
+  console.error(`Storage ${operation} failed:`, error)
+  if (error?.message?.includes('Row Level Security')) {
+    throw new Error('Permission denied - check storage policies')
+  }
+  throw error
+}
+
 export const storageService = {
-  async ensureBucketExists(bucketName: string) {
-    const supabase = createClient()
-    
+  async ensureBucketExists(bucketName: BucketName) {
+    const supabase = await createClient()
+    // console.log('supabase', supabase)
     try {
-      // Try to get bucket info first
-      const { data: bucket } = await supabase
+      const { data: bucket, error: getBucketError } = await supabase
         .storage
         .getBucket(bucketName)
-      
+
+      // if (getBucketError) throw getBucketError
+      console.log('bucket', bucket)
+
       if (!bucket) {
-        // Create bucket if it doesn't exist
-        const { data, error } = await supabase
+        const config: BucketConfig = {
+          public: true,
+          fileSizeLimit: 52428800, // 50MB
+          allowedMimeTypes: ['image/*']
+        }
+
+        const { error: createError } = await supabase
           .storage
-          .createBucket(bucketName, {
-            public: true,
-            fileSizeLimit: 52428800, // 50MB
-            allowedMimeTypes: ['image/*']
-          })
-        
-        if (error) throw error
+          .createBucket(bucketName, config)
+
+        if (createError) throw createError
       }
     } catch (error) {
-      console.error(`Error ensuring bucket ${bucketName} exists:`, error)
-      throw error
+      handleStorageError(error, `ensuring bucket ${bucketName} exists`)
     }
   },
 
   async uploadFile(file: File, path: string, bucketName: string = STORAGE_BUCKETS.PROPERTIES): Promise<string> {
-    const supabase = createClient()
-    
-    // Ensure bucket exists before upload
-    await this.ensureBucketExists(bucketName)
+    const supabase = await createClient()
 
-    const fileExt = file.name.split('.').pop()
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
-    const filePath = `${path}/${fileName}`
+    try {
+      // Log bucket info
+      const { data: bucketInfo, error: bucketError } = await supabase
+        .storage
+        .getBucket(bucketName)
+      console.log('Bucket info:', bucketInfo, 'Bucket error:', bucketError)
 
-    const { error: uploadError } = await supabase.storage
-      .from(bucketName)
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      })
+      // Log authentication status
+      const { data: { session }, error: authError } = await supabase.auth.getSession()
+      console.log('Auth session:', session, 'Auth error:', authError)
 
-    if (uploadError) throw uploadError
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`
+      const filePath = `${path}/${fileName}`
 
-    const { data } = supabase.storage
-      .from(bucketName)
-      .getPublicUrl(filePath)
+      // Attempt upload with detailed error logging
+      const { data, error: uploadError } = await supabase.storage
+        .from(bucketName)
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false
+        })
 
-    return data.publicUrl
+      console.log('Upload response:', data, 'Upload error:', uploadError)
+
+      if (uploadError) {
+        console.error('Upload error details:', {
+          message: uploadError.message,
+          stack: uploadError.stack
+
+        })
+        throw uploadError
+      }
+
+      const { data: urlData } = supabase.storage
+        .from(bucketName)
+        .getPublicUrl(filePath)
+
+      return urlData.publicUrl
+    } catch (error) {
+      console.error('Detailed error:', error)
+      throw error
+    }
   },
-
   async deleteFile(path: string, bucketName: string = STORAGE_BUCKETS.PROPERTIES) {
-    const supabase = createClient()
-    
+    const supabase = await createClient()
+
     const { error } = await supabase.storage
       .from(bucketName)
       .remove([path])

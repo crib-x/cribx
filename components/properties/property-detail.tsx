@@ -46,14 +46,14 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
               <div>
                 <p className="text-sm text-gray-500 ">Incentives</p>
                 {property.incentiveList?.map((incentive, index) => (
-                  <p className="font-medium py-3 border-b">
+                  <p key={incentive.title} className="font-medium py-3 border-b" >
                     {incentive.title}
                   </p>
                 ))}
               </div>
             </CardContent>
           </Card>
-          {property.fees.map((fee, index) => (
+          {property.fees.map((fee: any) => (
             <Card>
               <CardContent className="p-4 flex items-center space-x-3">
                 <Car className="h-5 w-5 text-purple-600" />

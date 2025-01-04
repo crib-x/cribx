@@ -14,9 +14,17 @@ export const AMENITIES_OPTIONS = [
 export const PROPERTY_TYPES = [
   { value: "apartment", label: "Apartment" },
   { value: "house", label: "House" },
-  { value: "condo", label: "Condo" },
   { value: "townhouse", label: "Townhouse" },
-  { value: "studio", label: "Studio" }
+  { value: "studio", label: "Studio" },
+  { value: "hostel", label: "Hostel" }
+]
+
+export const CHARGE_TYPES = [
+  { value: "Water", label: "Water" },
+  // { value: "house", label: "House" },
+  // { value: "condo", label: "Condo" },
+  // { value: "townhouse", label: "Townhouse" },
+  // { value: "studio", label: "Studio" }
 ]
 
 export const LEASE_TERMS = [

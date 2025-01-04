@@ -5,12 +5,14 @@ interface MediaUploadOptions {
   floorPlans: (File | string)[]
   unitMedia: (File | string)[]
   onlyNewFiles?: boolean
+  property_id: string
 }
 
-interface MediaUploadResult {
-  images: string[]
-  floorPlans: string[]
-  unitMedia: string[]
+export interface MediaUploadResult {
+   type: string,
+    url: string,
+    property_id: string
+
 }
 
 export const propertyMediaService = {
@@ -18,8 +20,9 @@ export const propertyMediaService = {
     images,
     floorPlans,
     unitMedia,
-    onlyNewFiles = false
-  }: MediaUploadOptions): Promise<MediaUploadResult> {
+    onlyNewFiles = false,
+    property_id,
+  }: MediaUploadOptions): Promise<MediaUploadResult[]> {
     try {
       // Process each media type in parallel
       const [processedImages, processedFloorPlans, processedUnitMedia] = await Promise.all([
@@ -28,11 +31,12 @@ export const propertyMediaService = {
         this.processMediaFiles(unitMedia, 'unit-media', onlyNewFiles)
       ])
 
-      return {
-        images: processedImages,
-        floorPlans: processedFloorPlans,
-        unitMedia: processedUnitMedia
-      }
+      return [
+        ...this.convertToObjectArray(processedImages, 'image', property_id), 
+        ...this.convertToObjectArray(processedFloorPlans, 'floor_plans', property_id), 
+        ...this.convertToObjectArray(processedUnitMedia, 'units', property_id), 
+      ]
+    
     } catch (error) {
       console.error('Error uploading property media:', error)
       throw new Error('Failed to upload property media')
@@ -50,7 +54,7 @@ export const propertyMediaService = {
       files.map(async (file) => {
         // If it's already a string URL and we're only processing new files, return as is
         if (typeof file === 'string' && onlyNewFiles) {
-          return file
+          return 'uploaded'
         }
         
         // If it's a File, upload it
@@ -64,9 +68,14 @@ export const propertyMediaService = {
 
     return processedUrls.filter(Boolean) as string[]
   },
-
-  async deletePropertyMedia(propertyId: string) {
-    // Implement cleanup of property media files
-    // This would delete all media associated with a property when it's deleted
+  convertToObjectArray(urls: string[], type: string, id: string) {
+    return urls
+      .filter(url => url !== 'uploaded')
+      .map(url => ({
+        type,
+        url,
+        property_id: id
+      }));
   }
+  
 }

@@ -1,44 +1,64 @@
 "use client"
 
 import { motion } from 'framer-motion'
-import { Building, Users, DollarSign, Percent, Home } from 'lucide-react'
+import { Building, DollarSign, Percent, Home } from 'lucide-react'
+import { useState } from 'react'
 
-const stats = [
-  {
-    name: "Total Properties",
-    value: "0",
-    icon: Building,
-    description: "Active listings",
-    trend: "+2 this month",
-    trendUp: true,
-  },
-  {
-    name: "Total Units",
-    value: "0",
-    icon: Home,
-    description: "Across all properties",
-    trend: "+5 this month",
-    trendUp: true,
-  },
-  {
-    name: "Monthly Revenue",
-    value: "$0",
-    icon: DollarSign,
-    description: "Current month",
-    trend: "+8% vs last month",
-    trendUp: true,
-  },
-  {
-    name: "Occupancy Rate",
-    value: "N/A",
-    icon: Percent,
-    description: "Units occupied",
-    trend: "",
-    trendUp: false,
-  },
-]
+interface Stats {
+  name: string
+  value: string
+  icon: any
+  description: string
+  trend: string
+  id: string
+  trendUp: boolean
+}
 
-export default function DashboardStats() {
+interface DashboardStatsProps {
+  dashboardStats: Partial<Stats>[]
+}
+
+export default function DashboardStats({ stdashboardStatsats }: DashboardStatsProps) {
+  const [stats, setStats] = useState<Stats[]>( [
+    {
+      name: "Total Properties",
+      id: "total_properties",
+      value: "0",
+      icon: Building,
+      description: "Active listings",
+      trend: "+2 this month",
+      trendUp: true,
+    },
+    {
+      name: "Total Units",
+      id: "total_units",
+      value: "0",
+      icon: Home,
+      description: "Across all properties",
+      trend: "+5 this month",
+      trendUp: true,
+    },
+    {
+      name: "Monthly Revenue",
+      id: "monthly_revenue",
+      value: "$0",
+      icon: DollarSign,
+      description: "Current month",
+      trend: "+8% vs last month",
+      trendUp: true,
+    },
+    {
+      name: "Occupancy Rate",
+      id: "occupancy_rate",
+      value: "N/A",
+      icon: Percent,
+      description: "Units occupied",
+      trend: "",
+      trendUp: false,
+    },
+  ])
+ 
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, index) => {

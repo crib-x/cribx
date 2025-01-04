@@ -16,7 +16,7 @@ interface PropertyState {
   deleteProperty: (id: string) => Promise<void>
 }
 
-export const usePropertyStore = create<PropertyState>((set, get) => ({
+export const usePropertyStore = create<PropertyState>((set) => ({
   properties: [],
   selectedProperty: null,
   isLoading: false,
@@ -25,7 +25,7 @@ export const usePropertyStore = create<PropertyState>((set, get) => ({
   fetchProperties: async () => {
     set({ isLoading: true, error: null })
     try {
-      const properties = await propertyService.getProperties()
+      await propertyService.getProperties()
       // set({ properties })
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to fetch properties'
@@ -39,7 +39,7 @@ export const usePropertyStore = create<PropertyState>((set, get) => ({
   fetchPropertyById: async (id: string) => {
     set({ isLoading: true, error: null })
     try {
-      const property = await propertyService.getPropertyById(id)
+      await propertyService.getPropertyById(id)
       // set({ selectedProperty: property })
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to fetch property'
@@ -60,7 +60,7 @@ export const usePropertyStore = create<PropertyState>((set, get) => ({
       }
 
       const propertyId = await propertyService.createProperty(propertyData)
-      const newProperty = await propertyService.getPropertyById(propertyId)
+      await propertyService.getPropertyById(propertyId)
       
       // set(state => ({
       //   properties: [newProperty, ...state.properties]
@@ -86,7 +86,7 @@ export const usePropertyStore = create<PropertyState>((set, get) => ({
       }
 
       await propertyService.updateProperty(id, propertyData)
-      const updatedProperty = await propertyService.getPropertyById(id)
+       await propertyService.getPropertyById(id)
       
       // set(state => ({
       //   properties: state.properties.map(p => 
@@ -104,7 +104,7 @@ export const usePropertyStore = create<PropertyState>((set, get) => ({
     }
   },
 
-  deleteProperty: async (id: string) => {
+  deleteProperty: async () => {
     set({ isLoading: true, error: null })
     try {
       // await propertyService.deleteProperty(id).

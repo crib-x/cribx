@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { MOCK_PROPERTIES } from '@/lib/data/mock-properties'
-import PropertyFilters from '@/components/properties/property-filters'
 import PropertyGrid from '@/components/properties/property-grid'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'

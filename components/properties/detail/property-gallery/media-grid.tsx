@@ -53,7 +53,7 @@ export default function MediaGrid({ items }: MediaGridProps) {
         <DialogContent className="max-w-7xl h-[90vh]">
           {selectedIndex !== null && (
             <div className="relative h-full">
-              <Image
+              <Image priority={true}
                 src={items[selectedIndex].url}
                 alt={items[selectedIndex].title || `Media ${selectedIndex + 1}`}
                 fill
@@ -81,14 +81,14 @@ export default function MediaGrid({ items }: MediaGridProps) {
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 className="absolute right-4 top-4 bg-black/50 hover:bg-black/70 text-white"
                 onClick={closeLightbox}
               >
                 <X className="h-6 w-6" />
-              </Button>
+              </Button> */}
             </div>
           )}
         </DialogContent>

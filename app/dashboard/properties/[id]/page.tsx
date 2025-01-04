@@ -1,36 +1,27 @@
-"use client"
 
-import { useEffect } from 'react'
-import { useParams } from 'next/navigation'
-import { usePropertyStore } from '@/lib/store/property-store'
 import DashboardHeader from '@/components/dashboard/dashboard-header'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import PropertyOverview from '@/components/dashboard/properties/property-overview'
 import UnitList from '@/components/dashboard/units/unit-list'
-import { LoadingState } from '@/components/ui/loading-state'
-import { useRequireAuth } from '@/lib/auth/auth-hooks'
+import { getPropertyById } from '@/app/actions/properties';
 
-export default function PropertyDetailPage() {
-  const params = useParams()
-  const propertyId = params.id as string
-  const { selectedProperty, isLoading, fetchPropertyById } = usePropertyStore()
-  const isAuthenticated = useRequireAuth()
+interface PageProps {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
 
-  useEffect(() => {
-    if (isAuthenticated && propertyId) {
-      fetchPropertyById(propertyId)
-    }
-  }, [fetchPropertyById, propertyId, isAuthenticated])
+export default async function PropertyDetailPage({ params }: PageProps) {
 
-  if (!isAuthenticated) {
-    return null
-  }
+  const { id } = await params;
+  const propertyId = id
 
-  if (isLoading) {
-    return <LoadingState message="Loading property details..." />
-  }
+  const property = await getPropertyById(propertyId)
+  console.log(property)
 
-  if (!selectedProperty) {
+
+  if (!property) {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-gray-900">Property Not Found</h2>
@@ -41,9 +32,9 @@ export default function PropertyDetailPage() {
 
   return (
     <div className="space-y-8">
-      {/* <DashboardHeader
-        title={selectedProperty.title}
-        description={selectedProperty.address}
+      <DashboardHeader
+        title={property.title}
+        description={property.address}
       />
 
       <Tabs defaultValue="overview">
@@ -54,20 +45,20 @@ export default function PropertyDetailPage() {
         </TabsList>
 
         <TabsContent value="overview" className="mt-6">
-          <PropertyOverview property={selectedProperty} />
+          <PropertyOverview property={property} />
         </TabsContent>
 
         <TabsContent value="units" className="mt-6">
           <UnitList
             propertyId={propertyId}
-            units={selectedProperty.units || []}
+            units={property || []}
   
           />
         </TabsContent>
 
         <TabsContent value="settings" className="mt-6">
         </TabsContent>
-      </Tabs> */}
+      </Tabs>
     </div>
   )
 }

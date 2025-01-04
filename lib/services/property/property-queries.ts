@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/client'
-import { Property } from '@/lib/types/property'
 
 export const propertyQueries = {
   async getProperties() {
@@ -26,12 +25,12 @@ export const propertyQueries = {
       .order('created_at', { ascending: false })
 
     if (error) throw error
-    return this.mapPropertyData(data)
+    return data
   },
 
   async getPropertyById(id: string) {
     const supabase = createClient()
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('properties')
       .select(`
         *,
@@ -58,7 +57,7 @@ export const propertyQueries = {
   },
 
   // Helper to map database response to Property type
-  mapPropertyData(data: any[]) {
+  mapPropertyData() {
     // return data.map(p => ({
     //   id: p.id,
     //   title: p.title,

@@ -12,38 +12,13 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Edit, Trash2, Eye, Grid } from 'lucide-react'
 import Link from 'next/link'
+import { Property } from "@/lib/types/property"
 
-const properties = [
-  {
-    id: 1,
-    name: "Luxury Student Apartment",
-    address: "123 University Ave",
-    units: 12,
-    occupied: 10,
-    revenue: "$14,400",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Campus View Residences",
-    address: "456 College St",
-    units: 8,
-    occupied: 8,
-    revenue: "$10,000",
-    status: "Full",
-  },
-  {
-    id: 3,
-    name: "Student Housing Complex",
-    address: "789 Academic Dr",
-    units: 16,
-    occupied: 12,
-    revenue: "$18,000",
-    status: "Active",
-  },
-]
+interface PropertyTableProps {
+  properties: Property[]
+}
 
-export default function PropertyTable() {
+export default function PropertyTable({ properties }: PropertyTableProps) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -62,33 +37,33 @@ export default function PropertyTable() {
             <TableRow key={property.id}>
               <TableCell>
                 <div>
-                  <div className="font-medium">{property.name}</div>
+                  <div className="font-medium">{property.title}</div>
                   <div className="text-sm text-gray-500">{property.address}</div>
                 </div>
               </TableCell>
-              <TableCell>{property.units}</TableCell>
+              <TableCell>{property.units?.length || 0}</TableCell>
               <TableCell>
-                {property.occupied}/{property.units}
+                {/* {property?.occupied || 0}/{property.units} */}
                 <div className="text-sm text-gray-500">
-                  {Math.round((property.occupied / property.units) * 100)}% Occupied
+                  {Math.round(Number(property?.occupied||0))}% Occupied
                 </div>
               </TableCell>
-              <TableCell>{property.revenue}</TableCell>
+              <TableCell>{property?.revenue || "N/A"}</TableCell>
               <TableCell>
                 <Badge
-                  variant={property.status === "Full" ? "secondary" : "default"}
+                  variant={property?.status === "Full" ? "secondary" : "default"}
                 >
-                  {property.status}
+                  {property?.status || "Pending"}
                 </Badge>
               </TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
-                  <Link href={`/properties/${property.id}`}>
+                  <Link href={`/properties/${property?.id}`}>
                     <Button variant="ghost" size="icon">
                       <Eye className="h-4 w-4" />
                     </Button>
                   </Link>
-                  <Link href={`/dashboard/units?property=${property.id}`}>
+                  <Link href={`/dashboard/units?property=${property?.id}`}>
                     <Button variant="ghost" size="icon">
                       <Grid className="h-4 w-4" />
                     </Button>

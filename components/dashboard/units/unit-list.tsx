@@ -18,14 +18,12 @@ interface UnitListProps {
 export default function UnitList({ 
   propertyId,
   units,
-  // onUnitUpdate,
-  // onUnitDelete
 }: UnitListProps) {
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddUnit, setShowAddUnit] = useState(false)
   const [editingUnit, setEditingUnit] = useState<PropertyUnit | null>(null)
 
-  const filteredUnits = units.filter(unit => 
+  const filteredUnits = !units?.length ? [] : units.filter(unit => 
     unit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     unit.type.toLowerCase().includes(searchTerm.toLowerCase())
   )

@@ -2,17 +2,22 @@ import { PropertyUnit } from "./unit";
 
 export type Property = {
   title: string;
-  id: number
+  id: string
   address: string;
   description: string;
+  contact_phone: string;
+  contact_email: string;
+  contact_name: string;
   price: PriceRange;
   featuredImage: string; // URL to the main image
   specs: PropertySpec; // Key property specifications
   parking: Parking; // Parking details
   incentives: Incentive; // Incentives for renting
-  fees: Fee[]; // Additional fees for renting
+  // fees: Fee[]; // Additional fees for renting
+  fees: any; // Additional fees for renting
   pet: PetPolicy; // Pet policies and restrictions
-  charges: Charges; // Charges like water, gas, etc.
+  // charges: Charges[]; // Charges like water, gas, etc.
+  charges: any; // Charges like water, gas, etc.
   amenities: string[]; // List of amenities
   units: PropertyUnit[]; // Associated units for the property
   floorPlan: string[]; // Floor plan images
@@ -64,6 +69,9 @@ nearby?: {
 export type Fee = {
   title: string; // e.g., "Application Fee"
   amount: number; // Fee amount in dollars
+  description: string; // Fee description
+  id: string
+  property_id: string
 };
 
 export type PetPolicy = {
@@ -76,8 +84,7 @@ export type PetPolicy = {
 };
 
 export type Charges = {
-  water: Charge[]; // Details of water charges
-  electricity?: Charge[]; // Optional electricity charges
+ type: string, amount: number, description: string, property_id: string, id: string
 };
 
 export type Charge = {

@@ -29,10 +29,8 @@ import { Calendar as CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { leaseRequestSchema, type LeaseRequestFormSchema } from './form-schema'
 import { LeaseRequestProps } from './types'
-import { generateDiscountCode } from '@/lib/utils/discount-code'
-import { getAgentLeaseRequestEmailTemplate, getLeaseRequestEmailTemplate } from '@/lib/services/email-templates'
-import { sendEmail } from '@/lib/services/email-service'
 import { useNotificationStore } from '@/lib/store/notifications-store'
+import { sendLeaseRequest } from '@/app/actions/lease'
 
 const timeSlots = Array.from({ length: 24 }, (_, i) => {
   const hour = i.toString().padStart(2, '0')
@@ -63,36 +61,8 @@ export default function LeaseRequestForm({
   const onSubmit = async (data: LeaseRequestFormSchema) => {
     setIsSubmitting(true)
     try {
-      // Generate discount code and calculate amount
-      const discountCode = generateDiscountCode()
       const discountAmount = `${property?.incentives?.discount?.amount || 0}`
-
-      // Send confirmation email
-      await sendEmail({
-        to: data.email,
-        subject: `Your Lease Request - ${discountCode}`,
-        html: getLeaseRequestEmailTemplate({
-          name: data.name,
-          discountCode,
-          propertyName: property.title,
-          discountAmount
-        })
-      })
-      await sendEmail({
-        to: property?.contact?.email  as string,
-        subject: `New Lease Request - ${discountCode}`,
-        html: getAgentLeaseRequestEmailTemplate({
-          propertyName: property.title,
-          name: data.name,
-          email: data.email,
-          discountCode,
-          discountAmount,
-          moveInDate: data.moveInDate as any,
-          phone: data.phone,
-          needsPickup: data.needsPickup,
-        })
-      })
-
+      await sendLeaseRequest(data, property?.title,  discountAmount, property?.contact?.email as string, property?.id as string)
       addNotification({
         title: "Success",
         message: "Lease request submitted successfully! Check your email for the discount code.",
@@ -261,7 +231,7 @@ export default function LeaseRequestForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Expected Move-In Date</FormLabel>
-              <Popover>
+              <Popover modal={true}>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -285,6 +255,7 @@ export default function LeaseRequestForm({
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
+                    initialFocus
                     disabled={(date) =>
                       date < new Date()
                     }

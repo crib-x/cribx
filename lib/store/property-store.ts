@@ -24,7 +24,7 @@ export const usePropertyStore = create<PropertyState>((set) => ({
   fetchProperties: async () => {
     set({ isLoading: true, error: null })
     try {
-      const properties = await propertyActions.getProperties()
+     await propertyActions.getProperties()
       // set({ properties })
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to fetch properties'
@@ -38,7 +38,7 @@ export const usePropertyStore = create<PropertyState>((set) => ({
   fetchPropertyById: async (id) => {
     set({ isLoading: true, error: null })
     try {
-      const property = await propertyActions.getPropertyById(id)
+       await propertyActions.getPropertyById(id)
       // set({ selectedProperty: property })
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to fetch property'
@@ -57,7 +57,7 @@ export const usePropertyStore = create<PropertyState>((set) => ({
         throw new Error(errors.join(', '))
       }
       const propertyId = await propertyActions.createProperty(propertyData)
-      const newProperty = await propertyActions.getPropertyById(propertyId)
+      await propertyActions.getPropertyById(propertyId)
       // set(state => ({
       //   properties: [newProperty, ...state.properties]
       // }))
@@ -78,7 +78,7 @@ export const usePropertyStore = create<PropertyState>((set) => ({
         throw new Error(errors.join(', '))
       }
       await propertyActions.updateProperty(id, propertyData)
-      const updatedProperty = await propertyActions.getPropertyById(id)
+       await propertyActions.getPropertyById(id)
       // set(state => ({
       //   properties: state.properties.map(p => 
       //     p.id === id ? updatedProperty : p

@@ -3,7 +3,7 @@ import { Property } from "@/lib/types/property"
 
 export const MOCK_PROPERTIES: Property[] = [
   {
-    id: 1,
+    id: "1",
     title: "Lexington Concord Apartments Macomb",
     address: "902 N Charles St, Macomb, IL 61455",
     description: `<p style="margin-bottom: 12px">Welcome to <b>Lexington Concord Apartments</b>, where your ideal campus lifestyle awaits! Imagine living just steps away from all the action—our apartments are so close to campus that any closet could be your new home base for academic success. With a variety of studio to three-bedroom options, you’ll find the perfect space to fit your needs and style.</p><p style="margin-bottom: 12px">Dive into leisure at the biggest swimming pool in town, where sunny days become mini-vacations right outside your door. Stay active and energized with not one, but two state-of-the-art fitness centers at your disposal. Need to focus on work? Our well-equipped business center is here to support your productivity.</p><p style="margin-bottom: 12px">At Lexington Concord, we understand that your furry friends are part of the family, which is why we’re proud to be pet-friendly! Enjoy the convenience of free WiFi, concierge services, and 24-hour maintenance—because we believe that your comfort and peace of mind come first.</p>
@@ -222,6 +222,9 @@ export const MOCK_PROPERTIES: Property[] = [
         url: "https://example.com/tour.mp4"
       }
     ],
+    contact_phone: "(309)837-3377",
+    contact_email: "hayley@lakeshoremgmt.com",
+    contact_name: "Lexington Concord Apartments",
     contact: {
       name: "Lexington Concord Apartments",
       email: "hayley@lakeshoremgmt.com",
@@ -241,7 +244,7 @@ export const MOCK_PROPERTIES: Property[] = [
     ]
   },
   {
-    id: 2,
+    id: "2",
     title: "Turnberry Village",
     address: "201 Wigwam Hollow Road, Macomb, IL",
     description: `Voted by WIU students and the community as the “Best Apartment Complex to Live” for 2016 and 2017, Turnberry Village in Macomb offers you a comfortable and welcoming place to call home. We offer apartments that include 1 to 4 bedrooms and have been designed with convenient features such as a full-size washer and dryer, energy-efficient electric heat and central air conditioning, and a kitchen complete with a dishwasher, refrigerator, range/oven, and garbage disposal.
@@ -373,6 +376,9 @@ Turnberry Village III is an apartment community located in McDonough County and 
         url: "https://example.com/tour.mp4"
       }
     ],
+    contact_phone: "309-836-3536",
+    contact_email: "turnberrymacomb2@aol.com",
+    contact_name: "Turnberry Apartments",
     contact: {
       name: "Turnberry Apartments",
       email: "turnberrymacomb2@aol.com",
