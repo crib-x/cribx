@@ -70,14 +70,7 @@ export default function TeamMembers({teamMembers}: TeamMemberProps) {
                   </li>
                 </ul>
               </div>
-              <div className="relative h-[400px] rounded-lg overflow-hidden">
-                <Image
-                  src="/about/mission.jpg"
-                  alt="Student Community"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+           
             </motion.div>
           </div>
         </section>

@@ -1,29 +1,21 @@
 "use client";
-
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Property } from "@/lib/types/property";
+import { Fee, Property } from "@/lib/types/property";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyGallery from "./detail/property-gallery";
 import PropertyOverview from "./detail/property-overview";
 import PropertyFeatures from "./detail/property-features";
 import PropertyLocation from "./detail/property-location";
-import {
-  DollarSign,
-  Car,
-  PawPrint,
-  Home,
-} from "lucide-react";
+import { DollarSign, Car, PawPrint, Home } from "lucide-react";
 import PropertyContact from "./detail/property-contact";
-import PropertyUnit from "./propert-units";
+import PropertyUnitList from "./propert-units";
 
 interface PropertyDetailProps {
   property: Property;
 }
 
 export default function PropertyDetail({ property }: PropertyDetailProps) {
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <motion.div
@@ -45,16 +37,19 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
               <DollarSign className="h-5 w-5 text-green-600" />
               <div>
                 <p className="text-sm text-gray-500 ">Incentives</p>
-                {property.incentiveList?.map((incentive, index) => (
-                  <p key={incentive.title} className="font-medium py-3 border-b" >
+                {property.incentiveList?.map((incentive) => (
+                  <p
+                    key={incentive.title}
+                    className="font-medium py-3 border-b"
+                  >
                     {incentive.title}
                   </p>
                 ))}
               </div>
             </CardContent>
           </Card>
-          {property.fees.map((fee: any) => (
-            <Card>
+          {property.fees.map((fee: Fee, index: number) => (
+            <Card key={`${fee.title}-${index}`}>
               <CardContent className="p-4 flex items-center space-x-3">
                 <Car className="h-5 w-5 text-purple-600" />
                 <div>
@@ -86,12 +81,12 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Property Details */}
           <div className="lg:col-span-2">
-            <Tabs defaultValue="overview">
+            <Tabs defaultValue="units">
               <TabsList>
+                <TabsTrigger value="units">Units</TabsTrigger>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="features">Features</TabsTrigger>
                 <TabsTrigger value="location">Location</TabsTrigger>
-                <TabsTrigger value="units">Units</TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview">
@@ -109,7 +104,7 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
               </TabsContent>
 
               <TabsContent value="units">
-                <PropertyUnit property={property} />
+                <PropertyUnitList property={property} />
               </TabsContent>
             </Tabs>
           </div>

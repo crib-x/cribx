@@ -1,27 +1,42 @@
-import { Button } from "react-day-picker";
-import { Card, CardContent } from "../ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Property } from "@/lib/types/property";
-import { useState } from "react";
-interface PropertyUnitProps {
-  property: Property;
-}
-export default function PropertyUnit({ property }: PropertyUnitProps) {
-  const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Property } from '@/lib/types/property';
+import { 
+  Calendar, 
+  BedDouble, 
+  Bath, 
+  Home, 
+  ArrowRight,
+  Sparkles
+} from 'lucide-react';
+import LeaseRequestDialog from './detail/property-contact/lease-request-dialog';
 
-  const availableUnits = property.units.filter(
-    (unit) => unit.availability.isAvailable
-  );
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
+};
+
+export default function PropertyUnitList({ property }: { property: Property }) {
+  const availableUnits = property.units;
 
   if (!availableUnits.length) {
     return (
       <Card>
         <CardContent className="p-6 text-center text-gray-500">
-          No units details available for this property
+          No units available for this property
         </CardContent>
       </Card>
-    )
+    );
   }
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -30,58 +45,142 @@ export default function PropertyUnit({ property }: PropertyUnitProps) {
           {availableUnits.map((unit) => (
             <Card key={unit.id} className="hover:shadow-lg transition-shadow">
               <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h4 className="font-semibold">{unit.name}</h4>
-                    <p className="text-sm text-gray-500">{unit.type}</p>
+                <div className="flex flex-col gap-4">
+                  {/* Unit Image */}
+                  <div className="relative aspect-video rounded-lg overflow-hidden">
+                    <Image
+                      src={unit.images[0]}
+                      fill
+                      alt={`${unit.name}`}
+                      className="object-cover"
+                    />
+                    {unit.incentives && unit.incentives.length > 0 && (
+                      <div className="absolute top-2 left-2">
+                        <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 shadow-lg">
+                          <Sparkles className="w-4 h-4" />
+                          Limited Time Offer
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-right">
-                    <p className="font-bold text-lg">${unit.rent.price}/mo</p>
-                    <p className="text-sm text-gray-500">
-                      Available{" "}
-                      {unit.availability.moveInDate?.toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
-                  <div>
-                    <p className="text-gray-500">Size</p>
-                    <p className="font-medium">{unit.size} sqft</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Occupancy</p>
-                    <p className="font-medium">{unit.occupancy} people</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-500">Lease Terms</p>
-                    <p className="font-medium">
-                      {unit.availability.leaseTerms[0]}
-                    </p>
-                  </div>
-                </div>
+                  {/* Unit Information */}
+                  <div className="space-y-4">
+                    {/* Header and Price - Responsive Stack */}
+                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                      <div className="w-full sm:w-auto">
+                        <h4 className="font-semibold text-lg">{unit.name}</h4>
+                        <div className="flex items-center gap-1 text-gray-500 mt-1">
+                          <Home className="w-4 h-4" />
+                          <p className="text-sm">{unit.type}</p>
+                        </div>
+                      </div>
+                      <div className="bg-primary/5 p-3 rounded-lg w-full sm:w-auto text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <p className="text-3xl font-bold text-primary">
+                            {formatPrice(unit.price)}
+                          </p>
+                        </div>
+                        <p className="text-sm text-gray-600">{unit?.paymentDuration || 'Monthly'}</p>
+                      </div>
+                    </div>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {unit.amenities.map((amenity, index) => (
-                    <Badge key={index} variant="secondary">
-                      {amenity}
-                    </Badge>
-                  ))}
-                </div>
+                    {/* Features Grid */}
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-blue-100 rounded-lg shrink-0">
+                          <BedDouble className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm text-gray-500">Beds</p>
+                          <p className="font-medium truncate">{unit.rooms || 'N/A'}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-purple-100 rounded-lg shrink-0">
+                          <Bath className="w-5 h-5 text-purple-600" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm text-gray-500">Baths</p>
+                          <p className="font-medium truncate">{unit.baths || 'N/A'}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-orange-100 rounded-lg shrink-0">
+                          <Home className="w-5 h-5 text-orange-600" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm text-gray-500">Size</p>
+                          <p className="font-medium truncate">{unit.size}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="p-2 bg-green-100 rounded-lg shrink-0">
+                          <Calendar className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-sm text-gray-500">Move-in</p>
+                          <p className="font-medium truncate">{unit?.moveInDate || 'Flexible'}</p>
+                        </div>
+                      </div>
+                    </div>
 
-                <div className="flex gap-2">
-                  <Button
-                    className="flex-1"
-                    onClick={() => setSelectedUnit(unit.id)}
-                  >
-                    View Details
-                  </Button>
+                    {/* Amenities and Incentives */}
+                    <div className="space-y-3">
+                      {/* Amenities */}
+                      <div className="flex flex-wrap gap-2">
+                        {unit.amenities.slice(0, 3).map((amenity, index) => (
+                          <Badge key={index} variant="secondary">
+                            {amenity}
+                          </Badge>
+                        ))}
+                        {unit.amenities.length > 3 && (
+                          <Badge variant="outline" className="cursor-pointer">
+                            +{unit.amenities.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      {/* Incentives */}
+                      {unit.incentives && unit.incentives.length > 0 && (
+                        <div className="bg-green-50 rounded-lg p-3 border border-green-100">
+                          <div className="flex items-start gap-2">
+                            <Sparkles className="w-5 h-5 text-green-500 shrink-0" />
+                            <div className="space-y-1">
+                              <p className="font-medium text-green-700">Special Offer!</p>
+                              <p className="text-green-600 text-sm">
+                                {unit.incentives.join(', ')}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Link 
+                        href={`/properties/${property.id}/units/${unit.id}`} 
+                        className="w-full"
+                      >
+                        <Button 
+                         
+                          className="w-full gap-2"
+                        >
+                          View Details
+                          <ArrowRight className="w-4 h-4" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
       </CardContent>
+
     </Card>
+    
   );
 }

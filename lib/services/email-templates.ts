@@ -16,7 +16,7 @@ export function getLeaseRequestEmailTemplate({
   discountCode,
   propertyName,
   discountAmount
-}: EmailTemplateProps): string {
+}: EmailTemplateProps ): string {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #2563eb;">Thank You for Your Interest!</h2>

@@ -26,6 +26,7 @@ const navigation = [
   { name: 'Units', href: '/dashboard/units', icon: Grid },
   { name: 'Tenants', href: '/dashboard/tenants', icon: Users },
   { name: 'Lease Request', href: '/dashboard/lease-request', icon: Users },
+  { name: 'Team', href: '/dashboard/team', icon: Users },
   { name: 'Messages', href: '/dashboard/messages', icon: MessageSquare },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]

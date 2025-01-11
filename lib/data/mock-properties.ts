@@ -1,5 +1,4 @@
-
-import { Property } from "@/lib/types/property"
+import { Property } from "@/lib/types/property";
 
 export const MOCK_PROPERTIES: Property[] = [
   {
@@ -10,39 +9,39 @@ export const MOCK_PROPERTIES: Property[] = [
 
 <p style="margin-bottom: 12px">With easy access to the bus route and complimentary rides to and from the train station, you’re never far from adventure. Whether you’re looking to study hard or unwind with friends, Lexington Concord Apartments is the place where convenience meets community. Come discover your new home today!</p>`,
     price: { min: 800, max: 1200 },
-    logo: '/lexi_logo.jpg',
+    logo: "/lexi_logo.jpg",
     type: "Property",
     location: {
       lat: 40.46884648312167,
-      lng: -90.67855642458525
+      lng: -90.67855642458525,
     },
     featuredImage: "/lexicon/property_photos/lexington_property1.jpg",
     specs: {
       beds: 2,
       baths: 2,
-      sqft: 900
+      sqft: 900,
     },
     parking: {
       type: "Garage",
       spaces: 100,
-      cost: 50
+      cost: 50,
     },
     incentiveList: [
       {
-        propertyType: 'All',
+        propertyType: "All",
         title: "$20 off on Security Deposit through cribX",
-        note: "Discount"
-      }
+        note: "Discount",
+      },
     ],
     incentives: {
       discount: {
         amount: 20,
-        title: '$20 off on Security Deposit through cribX'
-      }
+        title: "$20 off on Security Deposit through cribX",
+      },
     },
     fees: [
       { title: "Application Fee", amount: 30 },
-      { title: "Security Deposit", amount: 99 }
+      { title: "Security Deposit", amount: 99 },
     ],
     pet: {
       allowed: true,
@@ -50,62 +49,67 @@ export const MOCK_PROPERTIES: Property[] = [
       monthlyRent: 30,
       oneTimeFee: 0,
       countLimit: 2,
-      weightLimit: "45 lbs"
+      weightLimit: "45 lbs",
     },
     charges: {
       water: [
         { title: "Water - 1BR", amount: 35 },
         { title: "Water - 1BR", amount: 50 },
-        { title: "Water - 2BR", amount: 65 }
-      ]
+        { title: "Water - 2BR", amount: 65 },
+      ],
     },
     units: [
-      // {
-      //   id: "u1",
-      //   propertyId: "1",
-      //   type: "Apartment",
-      //   name: "Unit 101",
-      //   occupancy: 2,
-      //   rent: {
-      //     price: 900,
-      //     deposit: 500,
-      //     incentives: ["First Month Free"]
-      //   },
-      //   size: 900,
-      //   amenities: ["In-Unit Laundry", "Balcony", "Updated Kitchen"],
-      //   availability: {
-      //     isAvailable: true,
-      //     moveInDate: new Date("2024-06-01"),
-      //     leaseTerms: ["12 months", "9 months"]
-      //   },
-      //   utilitiesIncluded: ["Water", "Trash"],
-      //   images: ["/turnberry/Turnberry1.jpg", "/turnberry/Turnberry2.jpg"],
-      //   floorPlan: "/turnberry/2bed-plan.jpg",
-      //   description: "Spacious 2-bedroom apartment with modern finishes"
-      // },
-      // {
-      //   id: "u2",
-      //   propertyId: "1",
-      //   type: "Apartment",
-      //   name: "Unit 102",
-      //   occupancy: 2,
-      //   rent: {
-      //     price: 950,
-      //     deposit: 500,
-      //     incentives: ["First Month Free"]
-      //   },
-      //   size: 900,
-      //   amenities: ["In-Unit Laundry", "Corner Unit", "City View"],
-      //   availability: {
-      //     isAvailable: true,
-      //     moveInDate: new Date("2024-05-15"),
-      //     leaseTerms: ["12 months"]
-      //   },
-      //   utilitiesIncluded: ["Water", "Trash"],
-      //   images: ["/turnberry/Turnberry2.jpg", "/turnberry/Turnberry3.jpg"],
-      //   floorPlan: "/turnberry/2bed-plan.jpg",
-      //   description: "Premium corner unit with city views"
-      // }
+      {
+        id: "1",
+        propertyId: "1",
+        type: "Apartment",
+        description:
+          "2 Bedroom, 2 bathroom apartment with kitchen and living area",
+        name: "Concord: 2 Bedroom - 2 Bath",
+        paymentDuration: "Monthly",
+        fees: [
+          {
+            title: "Application Fee",
+            amount: 30,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+          {
+            title: "Security Deposit",
+            amount: 99,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+        ],
+        price: 750,
+        deposit: 99,
+        rooms: 2,
+        baths: 2,
+        incentives: ["$20 off on Security Deposit through cribX"],
+        size: "900 sqft.",
+        amenities: [
+          "Oven",
+          "Washer&Dryer",
+          "Refrigrator",
+          "Dishwasher",
+          "Internet",
+        ],
+        isAvailable: true,
+        moveInDate: "08/15/2025",
+        leaseTerms: [],
+        images: [
+          "https://images.cdn.appfolio.com/edison356llc/images/125b686d-da99-4135-a3c8-86d618d5d54a/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/412ba0c7-efdf-424a-9da9-e674169a50ab/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/e5c6d00e-8811-4b22-be65-abd1caaee782/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/df34eb2a-56af-44d1-8539-b94f6ed9eadd/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/9363216c-7e4b-4fc9-b747-60026b8c4ba0/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/3d61e16d-fd67-40f4-aced-410630f307f3/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/67b645bf-f1dd-4062-97d2-60c3fd0e333d/large.jpg",
+          "https://images.cdn.appfolio.com/edison356llc/images/342c87fd-8e80-4d0a-9330-5d841856f325/large.jpg",
+        ],
+      },
     ],
     amenities: [
       "High Speed Internet Access",
@@ -167,31 +171,28 @@ export const MOCK_PROPERTIES: Property[] = [
       "Controlled Access",
       "Wi-Fi at Pool",
       "Yoga Studio",
-      "Bike Storage"
+      "Bike Storage",
     ],
     floorPlan: [
-      '/lexicon/floor_plans/Lexington_1bed.jpg',
-      '/lexicon/floor_plans/Lexington_1bedExtend.jpg',
-      '/lexicon/floor_plans/Lexington_1bedOffice.jpg',
-      '/lexicon/floor_plans/Lexington_2B1.5B.jpg',
-      '/lexicon/floor_plans/Lexington_2B2B.jpg',
-      '/lexicon/floor_plans/Lexington_studio.jpg',
+      "/lexicon/floor_plans/Lexington_1bed.jpg",
+      "/lexicon/floor_plans/Lexington_1bedExtend.jpg",
+      "/lexicon/floor_plans/Lexington_1bedOffice.jpg",
+      "/lexicon/floor_plans/Lexington_2B1.5B.jpg",
+      "/lexicon/floor_plans/Lexington_2B2B.jpg",
+      "/lexicon/floor_plans/Lexington_studio.jpg",
     ],
 
-
-
     unitMedia: [
-      '/lexicon/unit_photos/unit_photo1.jpg',
-      '/lexicon/unit_photos/unit_photo2.jpg',
-      '/lexicon/unit_photos/unit_photo3.jpg',
-      '/lexicon/unit_photos/unit_photo5.jpg',
-      '/lexicon/unit_photos/unit_photo6.jpg',
-      '/lexicon/unit_photos/unit_photo7.jpg',
-      '/lexicon/unit_photos/unit_photo8.jpg',
-      '/lexicon/unit_photos/unit_photo9.jpg',
-      '/lexicon/unit_photos/unit_photo10.jpg',
-      '/lexicon/unit_photos/unit_photo11.jpg',
-
+      "/lexicon/unit_photos/unit_photo1.jpg",
+      "/lexicon/unit_photos/unit_photo2.jpg",
+      "/lexicon/unit_photos/unit_photo3.jpg",
+      "/lexicon/unit_photos/unit_photo5.jpg",
+      "/lexicon/unit_photos/unit_photo6.jpg",
+      "/lexicon/unit_photos/unit_photo7.jpg",
+      "/lexicon/unit_photos/unit_photo8.jpg",
+      "/lexicon/unit_photos/unit_photo9.jpg",
+      "/lexicon/unit_photos/unit_photo10.jpg",
+      "/lexicon/unit_photos/unit_photo11.jpg",
     ],
     communityFeatures: [
       "Wi-Fi",
@@ -213,14 +214,14 @@ export const MOCK_PROPERTIES: Property[] = [
       "Volleyball Court",
       "Shuttle To Campus",
       "Walk To Campus",
-      "Individual Leases Available"
+      "Individual Leases Available",
     ],
     videos: [
       {
         id: "v1",
         title: "Property Tour",
-        url: "https://example.com/tour.mp4"
-      }
+        url: "https://example.com/tour.mp4",
+      },
     ],
     contact_phone: "(309)837-3377",
     contact_email: "hayley@lakeshoremgmt.com",
@@ -228,7 +229,7 @@ export const MOCK_PROPERTIES: Property[] = [
     contact: {
       name: "Lexington Concord Apartments",
       email: "hayley@lakeshoremgmt.com",
-      phone: "(309)837-3377"
+      phone: "(309)837-3377",
     },
     images: [
       "/lexicon/property_photos/lexington_property1.jpg",
@@ -240,8 +241,8 @@ export const MOCK_PROPERTIES: Property[] = [
       "/lexicon/property_photos/lexington_property7.jpg",
       "/lexicon/property_photos/lexington_property8.jpg",
       "/lexicon/property_photos/lexington_property9.jpg",
-      "/lexicon/property_photos/lexington_property10.jpg"
-    ]
+      "/lexicon/property_photos/lexington_property10.jpg",
+    ],
   },
   {
     id: "2",
@@ -252,35 +253,34 @@ Not only have the apartments themselves been designed to offer convenience and c
 We have built our apartment complex to exceed the expectations of our residents. Our dedication to customer service, including 24-hour emergency maintenance service, has strengthened our community and allowed us to serve the people of Macomb. We look forward to learning more about how we can help you.
 Turnberry Village III is an apartment community located in McDonough County and the 61455 ZIP Code. This area is served by the Macomb Community Unit School District 185 attendance zone.`,
     price: { min: 800, max: 1200 },
-    logo: '/turn_logo.jpeg',
+    logo: "/turn_logo.jpeg",
 
     featuredImage: "/turnberry/Turnberry8.jpg",
     specs: {
       beds: 2,
       baths: 2,
-      sqft: 900
+      sqft: 900,
     },
     location: {
       lat: 40.45951654910126,
-      lng: -90.69379054232895
+      lng: -90.69379054232895,
     },
 
     parking: {
       type: "Garage",
       spaces: 100,
-      cost: 50
+      cost: 50,
     },
     incentives: {
       discount: {
         amount: 50,
-        title: '$20 off on Security Deposit through cribX'
-      }
+        title: "$20 off on Security Deposit through cribX",
+      },
     },
-
 
     fees: [
       { title: "Application Fee", amount: 30 },
-      { title: "Security Deposit", amount: 500 }
+      { title: "Security Deposit", amount: 500 },
     ],
     type: "Property",
     pet: {
@@ -289,17 +289,16 @@ Turnberry Village III is an apartment community located in McDonough County and 
       monthlyRent: 20,
       oneTimeFee: 300,
       countLimit: 2,
-      weightLimit: "45 lbs"
+      weightLimit: "45 lbs",
     },
     charges: {
       water: [
         { title: "Water - 1BR", amount: 30 },
         { title: "Water - 2BR", amount: 40 },
         { title: "Water - 3BR", amount: 60 },
-        { title: "Water - 4BR", amount: 80 }
-      ]
+        { title: "Water - 4BR", amount: 80 },
+      ],
     },
-    units: [],
     amenities: [
       "High Speed Internet Access",
       "Wi-Fi",
@@ -336,7 +335,7 @@ Turnberry Village III is an apartment community located in McDonough County and 
       "Recreation Room",
       "Vaulted Ceiling",
       "Walk-In Closets",
-      "Lawn"
+      "Lawn",
     ],
     incentiveList: [
       {
@@ -347,10 +346,94 @@ Turnberry Village III is an apartment community located in McDonough County and 
       },
       {
         title: "4 bedroom - $40 discount",
-      }
+      },
     ],
     floorPlan: [],
     unitMedia: [],
+    units: [
+      {
+        id: "u1",
+        propertyId: "1",
+        type: "Apartment",
+        description: "201 Wigwam Hollow Road, #1201, Macomb, IL 61455",
+        name: "4 Bedroom - Turnberry III",
+        paymentDuration: "Monthly",
+        fees: [
+          {
+            title: "Application Fee",
+            amount: 35,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+          {
+            title: "Security Deposit",
+            amount: 500,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+        ],
+        price: 1400,
+        deposit: 500,
+        rooms: 4,
+        baths: 2,
+        incentives: ["$20 off on Security Deposit through cribX"],
+        size: "1,398 sqft.",
+        amenities: [
+          "IWasher and Dryer",
+          "Refrigerator",
+          "Microwave",
+          "Stove",
+          "Dishwasher",
+        ],
+        isAvailable: true,
+        moveInDate: "08/15/2025",
+        leaseTerms: [],
+        images: ["/turnberry/Turnberry1.jpg", "/turnberry/Turnberry2.jpg"],
+      },
+      {
+        id: "u2",
+        propertyId: "1",
+        type: "Apartment",
+        description: "201 Wigwam Hollow Road, #1201, Macomb, IL 61455",
+        name: "3 Bedroom",
+        paymentDuration: "Monthly",
+        fees: [
+          {
+            title: "Application Fee",
+            amount: 35,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+          {
+            title: "Security Deposit",
+            amount: 500,
+            property_id: "2",
+            id: "1",
+            description: "Application Fee",
+          },
+        ],
+        price: 1050,
+        deposit: 500,
+        rooms: 3,
+        baths: 2,
+        incentives: ["$20 off on Security Deposit through cribX"],
+        size: "1,209 sqft.",
+        amenities: [
+          "IWasher and Dryer",
+          "Refrigerator",
+          "Microwave",
+          "Stove",
+          "Dishwasher",
+        ],
+        isAvailable: true,
+        moveInDate: "08/15/2025",
+        leaseTerms: [],
+        images: ["/turnberry/Turnberry1.jpg", "/turnberry/Turnberry2.jpg"],
+      },
+    ],
     communityFeatures: [
       "Wi-Fi",
       "Laundry Facilities",
@@ -367,14 +450,14 @@ Turnberry Village III is an apartment community located in McDonough County and 
       "Pool",
       "Bicycle Storage",
       "Shuttle To Campus",
-      "Individual Leases Available"
+      "Individual Leases Available",
     ],
     videos: [
       {
         id: "v1",
         title: "Property Tour",
-        url: "https://example.com/tour.mp4"
-      }
+        url: "https://example.com/tour.mp4",
+      },
     ],
     contact_phone: "309-836-3536",
     contact_email: "turnberrymacomb2@aol.com",
@@ -382,7 +465,7 @@ Turnberry Village III is an apartment community located in McDonough County and 
     contact: {
       name: "Turnberry Apartments",
       email: "turnberrymacomb2@aol.com",
-      phone: "309-836-3536"
+      phone: "309-836-3536",
     },
     images: [
       "/turnberry/Turnberry1.jpg",
@@ -396,7 +479,7 @@ Turnberry Village III is an apartment community located in McDonough County and 
       "/turnberry/Turnberry9.jpg",
       "/turnberry/Turnberry10.jpeg",
       "/turnberry/Turnberry11.jpeg",
-      "/turnberry/Turnberry12.jpeg"
-    ]
+      "/turnberry/Turnberry12.jpeg",
+    ],
   },
-]
+];

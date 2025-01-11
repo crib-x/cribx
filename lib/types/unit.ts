@@ -1,3 +1,5 @@
+import { Fee } from "./property"
+
 export interface Unit {
   id: number
   number: string
@@ -13,7 +15,7 @@ export interface Unit {
 
 // Main Type for a Property Unit
 export type PropertyUnit = {
-  status: string
+  status?: string
   id: string; // Unique identifier for the unit
   propertyId: string; // ID of the property this unit belongs to
   type:
@@ -27,12 +29,20 @@ export type PropertyUnit = {
   | "Single-Family Home"
   | "Basement Apartment"; // Types of units
   name: string; // Unit name or identifier (e.g., "Unit 1A", "Room 2B")
-  occupancy: number; // Maximum number of occupants
-  rent: RentDetails; // Rent details
-  size?: number; // Size of the unit in square feet (optional)
+  occupancy?: number; // Maximum number of occupants
+  paymentDuration: string; // Payment duration (e.g., "Monthly", "Weekly")
+  price: number;
+  perRoom?: boolean;
+  rooms: number; // Number of rooms
+  baths: number; // Number of bathrooms
+  deposit?: number;
+  fees: Fee[]; // List of fees associated with the unit
+  incentives: string[]; // List of incentives (e.g., "First month free", "$20 off deposit")
+  size?: string; // Size of the unit in square feet (optional)
   amenities: string[]; // List of amenities available
-  availability: Availability; // Availability details
-  utilitiesIncluded: string[]; // Utilities included in the rent (e.g., "Water", "Electricity")
+  isAvailable: boolean;
+  moveInDate: string | null;
+  leaseTerms: string[];
   images: string[]; // Array of media URLs for the unit
   tenantIds?: string[]; // IDs of tenants occupying this unit (if applicable)
   floorPlan?: string; // URL for the floor plan (optional)
@@ -50,6 +60,6 @@ export type RentDetails = {
 // Availability Details
 export type Availability = {
   isAvailable: boolean; // Indicates if the unit is currently available
-  moveInDate: Date | null; // Earliest move-in date (nullable)
+  moveInDate: string | null; // Earliest move-in date (nullable)
   leaseTerms: string[]; // Available lease terms (e.g., "Short-term", "Long-term", "Month-to-month")
 };

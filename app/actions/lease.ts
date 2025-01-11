@@ -2,11 +2,23 @@
 import { getDataFromSupabase, insertDataToSupabase, updateDataInSupabase } from "@/hooks/database-actions"
 import { sendEmail } from "@/lib/services/email-service"
 import { getAgentLeaseRequestEmailTemplate, getLeaseRequestEmailTemplate } from "@/lib/services/email-templates"
+import { createClient } from "@/lib/supabase/server"
 import { generateDiscountCode } from "@/lib/utils/discount-code"
+import { LeaseRequestError } from "@/lib/utils/errorHandler"
 
 export const sendLeaseRequest = async (data: any, propertyTitle: string, discountAmount: string, propertyEmail: string, propertyId: string) => {
-    console.log('data', data)
+
+
+
     try {
+        const isPending = await isRequestPending(propertyId, data.email)
+        if (isPending) {
+            throw new LeaseRequestError(
+                'You already have a pending request for this property. You may have to wait for the agent to respond to your previous request',
+                'DUPLICATE_REQUEST',
+                409
+            );
+        }
         const discountCode = generateDiscountCode() // TODO: Confirm if the has been used before
         await sendEmail({
             to: data.email,
@@ -33,10 +45,23 @@ export const sendLeaseRequest = async (data: any, propertyTitle: string, discoun
             })
         })
         saveRequestToDb(data, discountCode, propertyTitle, propertyEmail, propertyId)
-        return { message: 'Email sent successfully' }
-    } catch (error) {
-        console.error('Failed to send lease request:', error)
-        return error
+        return {
+            success: true,
+            message: 'Lease request submitted successfully',
+            data: { discountCode }
+        };
+    } catch (error: unknown) {
+        if (error instanceof LeaseRequestError) {
+            throw error;
+        }
+
+        // Handle unexpected errors
+        console.error('Unexpected error in sendLeaseRequest:', error);
+        throw new LeaseRequestError(
+            'An unexpected error occurred',
+            'INTERNAL_ERROR',
+            500
+        );
     }
 
 
@@ -82,4 +107,14 @@ const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: s
     insertDataToSupabase(payload, 'lease_request', false)
 }
 
+const isRequestPending = async (propertyId: string, email: string) => {
+
+    const supabase = await createClient()
+    const { data, error } = await supabase.from('lease_request').select('*').eq('property_id', propertyId).eq('requestor_email', email)
+    if (error) {
+        throw error
+    }
+    console.log('data', data)
+    return data.length > 0
+}
 
