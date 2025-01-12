@@ -7,6 +7,7 @@ export type Property = {
   description: string;
   contact_phone: string;
   contact_email: string;
+  externalListingUrl: string;
   contact_name: string;
   price: PriceRange;
   featuredImage: string; // URL to the main image

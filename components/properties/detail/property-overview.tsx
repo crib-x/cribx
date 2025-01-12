@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Property } from "@/lib/types/property";
-import { Bed, Bath, Square, DollarSign, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface PropertyOverviewProps {
   property: Property;

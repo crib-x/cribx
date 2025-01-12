@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server"
 import { generateDiscountCode } from "@/lib/utils/discount-code"
 import { LeaseRequestError } from "@/lib/utils/errorHandler"
 
-export const sendLeaseRequest = async (data: any, propertyTitle: string, discountAmount: string, propertyEmail: string, propertyId: string) => {
+export const sendLeaseRequest = async (data: any, propertyTitle: string, discountAmount: string, propertyEmail: string, propertyId: string, propertyUrl: string) => {
 
 
 
@@ -27,7 +27,8 @@ export const sendLeaseRequest = async (data: any, propertyTitle: string, discoun
                 name: data.name,
                 discountCode,
                 propertyName: propertyTitle,
-                discountAmount
+                discountAmount,
+                propertyUrl 
             })
         })
         await sendEmail({
@@ -102,7 +103,8 @@ const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: s
         discount: discountCode,
         receiver_email: propertyEmail,
         property_title: propertyTitle,
-        status: "pending"
+        status: "pending",
+        external_id: data.externalUnitId,
     }
     insertDataToSupabase(payload, 'lease_request', false)
 }

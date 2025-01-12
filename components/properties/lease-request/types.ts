@@ -1,4 +1,5 @@
 import { Property } from "@/lib/types/property";
+import { PropertyUnit } from "@/lib/types/unit";
 export interface LeaseRequestFormData {
   name: string;
   email: string;
@@ -12,6 +13,8 @@ export interface LeaseRequestFormData {
 
 export interface LeaseRequestProps {
   property: Property
+  unit: PropertyUnit
+  link?: string;
   onSuccess?: () => void;
   onError?: () => void;
 }

@@ -18,6 +18,7 @@ export type PropertyUnit = {
   status?: string
   id: string; // Unique identifier for the unit
   propertyId: string; // ID of the property this unit belongs to
+  externalId: string; // External ID for the unit (e.g., from a property management system)
   type:
   | "Studio"
   | "Apartment"

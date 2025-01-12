@@ -24,33 +24,24 @@ export default function PropertyContact({ property }: PropertyContactProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4">
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={() => setShowMessage(true)}
-              >
-                <MessageSquare className="mr-2 h-4 w-4" />
-                Send Message
-              </Button>
-            </div>
+          
 
-            <div className="relative">
+            {/* <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">or</span>
               </div>
-            </div>
+            </div> */}
 
-            <Button 
+            {/* <Button 
               className="w-full bg-blue-600 hover:bg-blue-700"
               onClick={() => setShowLeaseRequest(true)}
             >
               <Calendar className="mr-2 h-4 w-4" />
-              Request Lease
-            </Button>
+              Apply Now
+            </Button> */}
 
             {property.contact && (
               <div className="space-y-3 pt-4 border-t">
@@ -72,6 +63,16 @@ export default function PropertyContact({ property }: PropertyContactProps) {
                 )}
               </div>
             )}
+              <div className="grid grid-cols-1 gap-4">
+              <Button 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                
+                onClick={() => setShowMessage(true)}
+              >
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Send Message
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -82,11 +83,11 @@ export default function PropertyContact({ property }: PropertyContactProps) {
         onOpenChange={setShowMessage}
       />
 
-      <LeaseRequestDialog
+      {/* <LeaseRequestDialog
         property={property}
         open={showLeaseRequest}
         onOpenChange={setShowLeaseRequest}
-      />
+      /> */}
     </>
   )
 }

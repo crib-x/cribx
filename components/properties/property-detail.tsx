@@ -104,7 +104,7 @@ export default function PropertyDetail({ property }: PropertyDetailProps) {
               </TabsContent>
 
               <TabsContent value="units">
-                <PropertyUnitList property={property} />
+                <PropertyUnitList property={property}  />
               </TabsContent>
             </Tabs>
           </div>

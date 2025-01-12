@@ -6,6 +6,8 @@ export const leaseRequestSchema = z.object({
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   needsPickup: z.boolean(),
   arrivalDate: z.date().optional(),
+  unitId: z.string().optional(),
+  externalUnitId: z.string().optional(),
   arrivalTime: z.string().optional(),
   moveInDate: z.date(),
   message: z.string().optional()
