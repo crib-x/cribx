@@ -45,7 +45,7 @@ export const sendLeaseRequest = async (data: any, propertyTitle: string, discoun
                 needsPickup: data.needsPickup,
             })
         })
-        saveRequestToDb(data, discountCode, propertyTitle, propertyEmail, propertyId)
+        saveRequestToDb(data, discountCode, propertyTitle, propertyEmail, propertyId, propertyUrl)
         return {
             success: true,
             message: 'Lease request submitted successfully',
@@ -91,7 +91,7 @@ export const updateLeaseRequestStatus = async (leaseId: string, status: string, 
     }
 }
 
-const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: string, propertyEmail: string, propertyId: string) => {
+const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: string, propertyEmail: string, propertyId: string, propertyUrl: string) => {
     const payload = {
         requestor_name: data.name,
         requestor_email: data.email,
@@ -103,8 +103,8 @@ const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: s
         discount: discountCode,
         receiver_email: propertyEmail,
         property_title: propertyTitle,
-        status: "pending"
-        // external_id: data.externalUnitId,
+        status: "pending",
+        external_id: propertyUrl
     }
     insertDataToSupabase(payload, 'lease_request', false)
 }
