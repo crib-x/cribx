@@ -23,11 +23,9 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
   const mailOptions = {
     from: process.env.SMTP_SENDER,
     to: process.env.NODE_ENV === 'production' ? to : process.env.SMTP_TEST_EMAIL,
-    // to,
     subject,
     html,
     bcc: process.env.NODE_ENV === 'production' ? 'admin@cribx.net' : process.env.SMTP_TEST_EMAIL,
-    // to,
   };
 
   try {
