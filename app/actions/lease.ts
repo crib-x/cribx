@@ -103,8 +103,8 @@ const saveRequestToDb = async (data: any, discountCode: string, propertyTitle: s
         discount: discountCode,
         receiver_email: propertyEmail,
         property_title: propertyTitle,
-        status: "pending",
-        external_id: data.externalUnitId,
+        status: "pending"
+        // external_id: data.externalUnitId,
     }
     insertDataToSupabase(payload, 'lease_request', false)
 }
