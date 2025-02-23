@@ -90,7 +90,7 @@ export default function UnitForm({
   const form = useForm({
     resolver: zodResolver(unitSchema),  
     defaultValues: {
-      propertyId,
+      property_id: propertyId,
       quantity: 1,
       id: initialData?.id || "",
       name: initialData?.name || "",
