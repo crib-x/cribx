@@ -18,10 +18,8 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { MultiSelect } from "@/components/ui/multi-select";
 import {
   AMENITIES_OPTIONS,
-  LEASE_TERMS,
 } from "@/lib/constants/property-options";
 import { PropertyUnit } from "@/lib/types/unit";
 import ImageGallery from "@/components/dashboard/image-gallery";
@@ -43,14 +41,15 @@ interface UnitFormProps {
   isEditing?: boolean;
 }
 
+const DURATION_OPTIONS = [
+  { value: "monthly", label: "Monthly" },
+  { value: "semester", label: "Semester (6 months)" },
+  { value: "yearly", label: "Yearly" },
+];
+
 const UNIT_TYPES = [
   { value: "studio", label: "Studio" },
-  { value: "1br", label: "1 Bedroom" },
-  { value: "2br", label: "2 Bedroom" },
-  { value: "3br", label: "3 Bedroom" },
-  { value: "4br", label: "4 Bedroom" },
-  { value: "penthouse", label: "Penthouse" },
-  { value: "loft", label: "Loft" },
+  { value: "apartment", label: "Apartment" },
   { value: "duplex", label: "Duplex" },
 ];
 
@@ -68,39 +67,53 @@ export default function UnitForm({
   propertyId,
   initialData,
   onSubmit,
-  isEditing = false,
 }: UnitFormProps) {
   const [unitPreview, setUnitPreview] = useState<UnitPreview[]>([]);
   const [namingPattern, setNamingPattern] = useState("number");
   const [startingNumber, setStartingNumber] = useState(101);
   const [prefix, setPrefix] = useState("");
   const [suffix, setSuffix] = useState("");
+  const [duration, setDuration] = useState("monthly");
+
+  const calculateAdjustedRent = (baseRent: number, duration: string) => {
+    switch (duration) {
+      case "semester":
+        return baseRent * 6;
+      case "yearly":
+        return baseRent * 12;
+      default:
+        return baseRent;
+    }
+  };
+  
 
   const form = useForm({
-    resolver: zodResolver(unitSchema),
+    resolver: zodResolver(unitSchema),  
     defaultValues: {
       propertyId,
       quantity: 1,
+      id: initialData?.id || "",
+      name: initialData?.name || "",
       ...initialData,
+      externalId: initialData?.externalId || "",
       type: initialData?.type || "Apartment",
-      rent: initialData?.rent || {
-        price: 0,
-        deposit: 0,
-        incentives: [],
-      },
+      baths: initialData?.baths || 0,
+      price: initialData?.price || 0,
+      fees: initialData?.fees || [],
+      rooms: initialData?.rooms || 0,
+      paymentDuration: initialData?.paymentDuration || "monthly",
+      size: initialData?.size || "",
+      incentives: initialData?.incentives || [],
+      isAvailable: initialData?.isAvailable || true,
+      moveInDate: initialData?.moveInDate || null,
       amenities: initialData?.amenities || [],
-      availability: initialData?.availability || {
-        isAvailable: true,
-        moveInDate: null,
-        leaseTerms: [],
-      },
       images: initialData?.images || [],
-    },
+    } as PropertyUnit,
   });
 
   const generateUnitNames = () => {
     const quantity = form.watch("quantity") || 0;
-    let units: UnitPreview[] = [];
+    const units: UnitPreview[] = [];
     
     if (namingPattern === "number") {
       for (let i = 0; i < quantity; i++) {
@@ -121,7 +134,8 @@ export default function UnitForm({
     setUnitPreview(units);
   };
 
-  const handleSubmit = async (formData: any) => {
+  const handleSubmit = async (formData: PropertyUnit) => {
+    console.log("Form data:", formData);
     try {
       const units = unitPreview.map((preview) => {
         // Replace template strings in description
@@ -134,6 +148,7 @@ export default function UnitForm({
           propertyId,
         };
       });
+      console.log("Submitting units:", units);
       await onSubmit(units);
       form.reset();
       setUnitPreview([]);
@@ -306,31 +321,71 @@ export default function UnitForm({
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="rent.price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Monthly Rent</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Base rent for all units
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          
+        <FormField
+    control={form.control}
+    name="paymentDuration"
+    render={({  }) => (
+      <FormItem>
+        <FormLabel>Rent Duration</FormLabel>
+        <Select
+          onValueChange={(value) => {
+            setDuration(value);
+            // Update the rent field when duration changes
+            const baseRent = form.getValues("price");
+            const adjustedRent = calculateAdjustedRent(baseRent, value);
+            form.setValue("price", adjustedRent);
+          }}
+          value={duration}
+        >
+          <FormControl>
+            <SelectTrigger>
+              <SelectValue placeholder="Select duration" />
+            </SelectTrigger>
+          </FormControl>
+          <SelectContent>
+            {DURATION_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <FormDescription>
+          Select the rent payment duration
+        </FormDescription>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
 
+  <FormField
+    control={form.control}
+    name="price"
+    render={({ field }) => (
+      <FormItem>
+        <FormLabel>{duration === "monthly" ? "Monthly" : duration === "semester" ? "Semester" : "Yearly"} Rent</FormLabel>
+        <FormControl>
+          <Input
+            type="number"
+            placeholder="0"
+            {...field}
+            onChange={(e) => {
+              const newValue = Number(e.target.value);
+              field.onChange(newValue);
+            }}
+          />
+        </FormControl>
+        <FormDescription>
+          Base rent for all units ({duration.toLowerCase()} payment)
+        </FormDescription>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
           <FormField
             control={form.control}
-            name="rent.deposit"
+            name="deposit"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Security Deposit</FormLabel>
@@ -354,7 +409,7 @@ export default function UnitForm({
         <FormField
           control={form.control}
           name="amenities"
-          render={({ field }) => (
+          render={({ }) => (
             <FormItem>
               <FormLabel>Unit Amenities</FormLabel>
               <FormDescription>
@@ -399,7 +454,7 @@ export default function UnitForm({
 
         <FormField
           control={form.control}
-          name="availability.isAvailable"
+          name="isAvailable"
           render={({ field }) => (
             <FormItem className="flex items-center justify-between">
               <div>
@@ -412,28 +467,6 @@ export default function UnitForm({
                 <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="availability.leaseTerms"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Available Lease Terms</FormLabel>
-              <FormDescription>
-                Applied to all generated units
-              </FormDescription>
-              <FormControl>
-                <MultiSelect
-                  options={LEASE_TERMS}
-                  selected={field.value}
-                  onChange={field.onChange}
-                  placeholder="Select lease terms"
                 />
               </FormControl>
               <FormMessage />
@@ -483,8 +516,9 @@ export default function UnitForm({
           )}
         />
 
-        <DialogFooter className="flex flex-col space-y-4">
-          <Alert>
+        <DialogFooter >
+          <div className="flex flex-col space-y-4">
+             <Alert>
             <Info className="h-4 w-4" />
             <AlertDescription>
               Review the unit preview above before submitting. All units will share the same base configuration for amenities, rent, and other settings.
@@ -494,11 +528,16 @@ export default function UnitForm({
             type="submit" 
             disabled={form.formState.isSubmitting || unitPreview.length === 0}
             className="w-full"
+            onClick={()=> {
+              console.log('submitting', handleSubmit(form.getValues()))
+            }}
           >
             {form.formState.isSubmitting
               ? "Creating Units..."
               : `Create ${unitPreview.length} Units`}
           </Button>
+          </div>
+         
         </DialogFooter>
       </form>
     </Form>

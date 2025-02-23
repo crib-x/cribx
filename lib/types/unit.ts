@@ -34,6 +34,7 @@ export type PropertyUnit = {
   paymentDuration: string; // Payment duration (e.g., "Monthly", "Weekly")
   price: number;
   perRoom?: boolean;
+  quantity?: number; // Number of units available
   rooms: number; // Number of rooms
   baths: number; // Number of bathrooms
   deposit?: number;

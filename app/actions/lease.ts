@@ -57,7 +57,6 @@ export const sendLeaseRequest = async (data: any, propertyTitle: string, discoun
         }
 
         // Handle unexpected errors
-        console.error('Unexpected error in sendLeaseRequest:', error);
         throw new LeaseRequestError(
             'An unexpected error occurred',
             'INTERNAL_ERROR',
@@ -116,7 +115,6 @@ const isRequestPending = async (propertyId: string, email: string) => {
     if (error) {
         throw error
     }
-    console.log('data', data)
     return data.length > 0
 }
 

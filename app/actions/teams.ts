@@ -18,7 +18,6 @@ export async function getTeamMemberById() {
       await getDataFromSupabase('teams', true)
 
     } catch (error) {
-        console.error('Error fetching data:', error)
         throw error
     }
 }

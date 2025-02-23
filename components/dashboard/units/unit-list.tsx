@@ -29,6 +29,7 @@ export default function UnitList({
   )
 
   const handleAddUnit = async (unit: PropertyUnit) => {
+    console.log(unit)
     // await onUnitUpdate(unit)
     setShowAddUnit(false)
   }

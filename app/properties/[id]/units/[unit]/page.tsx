@@ -34,7 +34,7 @@ export default function PropertyDetailPage() {
     if (params.id) {
       fetchProperty()
     }
-  }, [params.id])
+  }, [params])
 
   if (isLoading) {
     return <LoadingState message="Loading property details..." />
