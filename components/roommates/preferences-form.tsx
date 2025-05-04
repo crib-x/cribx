@@ -63,7 +63,7 @@ export default function MultiStepPreferencesForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       location: "",
-      budget: 1000,
+      budget: 10000,
       gender: "",
       lifestyle: "",
       cleanliness: "",
