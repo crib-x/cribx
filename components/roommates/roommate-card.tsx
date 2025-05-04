@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { MessageCircle, User } from 'lucide-react'
-import Image from 'next/image'
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { MessageCircle, User } from "lucide-react";
+import Image from "next/image";
 
-interface RoommateCardProps {
-  name: string
-  age: number
-  occupation: string
-  compatibility: number
-  image: string
-  interests: string[]
-  budget: number
+export interface RoommateCardProps {
+  name: string;
+  age: number;
+  occupation: string;
+  compatibility: number;
+  image: string;
+  interests: string[];
+  budget: number;
 }
 
 export default function RoommateCard({
@@ -23,22 +23,19 @@ export default function RoommateCard({
   compatibility,
   image,
   interests,
-  budget
+  budget,
 }: RoommateCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative h-48">
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-cover"
-        />
+        <Image src={image} alt={name} fill className="object-cover" />
       </div>
       <CardHeader className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="font-semibold text-lg">{name}, {age}</h3>
+            <h3 className="font-semibold text-lg">
+              {name}, {age}
+            </h3>
             <p className="text-sm text-gray-500">{occupation}</p>
           </div>
           <Badge variant="secondary" className="bg-green-100 text-green-800">
@@ -69,5 +66,5 @@ export default function RoommateCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
