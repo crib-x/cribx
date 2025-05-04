@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { MessageCircle, User } from 'lucide-react'
 import Image from 'next/image'
 
-interface RoommateCardProps {
+export interface RoommateCardProps {
   name: string
   age: number
   occupation: string

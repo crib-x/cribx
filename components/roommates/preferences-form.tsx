@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -20,10 +17,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
-import { format } from "date-fns";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const formSchema = z.object({
   location: z.string().min(2),
@@ -47,7 +46,17 @@ const formSchema = z.object({
   contactMethod: z.string().optional(),
 });
 
-export default function MultiStepPreferencesForm() {
+// 2. Infer the TypeScript type from the schema
+export type PreferencesFormData = z.infer<typeof formSchema>;
+
+// 3. Define props with a properly typed onSubmit
+interface MultiStepPreferencesFormProps {
+  onSubmit: (data: PreferencesFormData) => void;
+}
+
+export default function MultiStepPreferencesForm({
+  onSubmit,
+}: MultiStepPreferencesFormProps) {
   const [step, setStep] = useState(1);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -72,10 +81,6 @@ export default function MultiStepPreferencesForm() {
       contactMethod: "",
     },
   });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Final Values: ", values);
-  };
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
