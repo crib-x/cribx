@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
 import { useState, useTransition } from "react";
-import { matchRoommates, RoommateMatch } from "../actions/rommates";
+import { matchRoommates, RoommateMatch } from "../actions/roommates";
 import PreferencesForm, {
   PreferencesFormData,
 } from "@/components/roommates/preferences-form";
 import RoommateHero from "@/components/roommates/roommate-hero";
 import RoommateGrid from "@/components/roommates/roommate-grid";
 import { RoommateCardProps } from "@/components/roommates/roommate-card";
-
-
 
 export default function RoommatePage() {
   const [showPreferences, setShowPreferences] = useState(true);
@@ -43,7 +41,6 @@ export default function RoommatePage() {
       }
     });
   };
-
 
   return (
     <div className="pt-16">
